@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/x-icon" href="~/Images/AKR.ico" />
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
@@ -22,18 +23,24 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Order Online", "OrderOnline", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
     <div class="container body-content">
+        <div class="jumbotron jumboBckgrnd">
+            <img src="~/Images/cropped-cropped-Allen-K-Ryans-Logo-22.gif" alt="Company logo" id="logo" />
+            <p class="lead">The Best Chicken & Ribs in Livingston County! 517-518-8736</p>
+        </div>
         @RenderBody()
         <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        <footer id="footer">
+            <center>
+                <p>@DateTime.Now.Year - Developed by team <a href="https://media.giphy.com/media/11p1apCPqM7WEw/giphy.gif">Eagle</a> from EMU</p>
+            </center>
         </footer>
     </div>
 

@@ -2,30 +2,29 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
-
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+<h2>Welcome!</h2>
+<br />
+<div class="col-md-7">
+    <img id="rightimg-halfsz" src="~/Images/AKR-outsode-shot2-624x415.jpg" alt="photo of the store" />
+    <div>
+        <h3>Like us on Facebook!</h3>
+        <br />
+        <div id="fbind">
+            <div class="fb-page" data-href="https://www.facebook.com/allenkryans" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/allenkryans" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/allenkryans">Allen K. Ryan&#039;s</a></blockquote></div>
+        </div>
     </div>
 </div>
+<p>
+    Welcome to <strong>Allen K. Ryan’s!</strong>  Our family has been catering in the Livingston County area for over 10 years, and we recently opened our first store-front operation in Howell!  Our restaurant offers fresh, healthy meals for small groups or large, and our mission is to serve high quality food at reasonable prices.
+</p>
+<br />
+<p>
+    Please browse our <a href="@Url.Action("OrderOnline","Home")">menu</a> for a variety of chicken, ribs, and fish dinners with all the fixings!.  We prepare each meal fresh to order, making dinner time quick, healthy, and easy for our customers.
+</p>
+<br />
+<p>
+    Stop in for lunch or dinner. Our dining room accommodates up to 22 guests, and we also offer great carry-out and catering options. Stop in and give us a try!
+</p>
+<p>
+    <a class="btn btn-default" href="@Url.Action("OrderOnline","Home")">Order Now!</a>
+</p>
