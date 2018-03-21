@@ -32,9 +32,9 @@ namespace AllenKRyansCOSC481.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -61,9 +61,9 @@ namespace AllenKRyansCOSC481.Controllers
                 : message == ManageMessageId.Error ? "An error has occurred."
                 : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
                 : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
-                : "";
+                : string.Empty;
 
-            var userId = User.Identity.GetUserId();
+            var userId = User.Identity.GetUserId();          
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),
@@ -333,7 +333,7 @@ namespace AllenKRyansCOSC481.Controllers
             base.Dispose(disposing);
         }
 
-#region Helpers
+        #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
@@ -384,6 +384,6 @@ namespace AllenKRyansCOSC481.Controllers
             Error
         }
 
-#endregion
+        #endregion
     }
 }
