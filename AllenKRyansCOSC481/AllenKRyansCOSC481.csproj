@@ -214,11 +214,18 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\AKR-outsode-shot2-624x415.jpg" />
+    <Content Include="Images\AKR-ribs-photo-from-inet.png" />
+    <Content Include="Images\AKR.bmp" />
+    <Content Include="Images\AKR.ico" />
+    <Content Include="Images\cropped-cropped-Allen-K-Ryans-Logo-22.gif" />
+    <Content Include="Images\ribs-temp-img.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\menu-2016.pdf" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -305,7 +312,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>64677</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
