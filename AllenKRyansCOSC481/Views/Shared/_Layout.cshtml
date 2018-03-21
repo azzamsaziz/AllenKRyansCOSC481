@@ -35,12 +35,27 @@
             <img src="~/Images/cropped-cropped-Allen-K-Ryans-Logo-22.gif" alt="Company logo" id="logo" />
             <p class="lead">The Best Chicken & Ribs in Livingston County! 517-518-8736</p>
         </div>
-        @RenderBody()
-        <hr />
-        <footer id="footer">
-            <center>
-                <p>@DateTime.Now.Year - Developed by team <a href="https://media.giphy.com/media/11p1apCPqM7WEw/giphy.gif">Eagle</a> from EMU</p>
-            </center>
+        <div class="row">
+            <div class="col-md-8">
+                <!--Home views here-->
+                @RenderBody()
+
+
+            </div>
+            <!-- moved out of index.cshtml-->
+            <div class="col-md-4">
+                <div>
+                    <h3>Like us on Facebook!</h3>
+                    <br />
+                    <div id="fbind">
+                        <div class="fb-page" data-href="https://www.facebook.com/allenkryans" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/allenkryans" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/allenkryans">Allen K. Ryan&#039;s</a></blockquote></div>
+                    </div>
+                </div>
+            </div>
+            <hr />
+        </div>
+        <footer>
+            <p>@DateTime.Now.Year - Developed by team <a href="https://media.giphy.com/media/11p1apCPqM7WEw/giphy.gif">Eagle</a> from EMU</p>
         </footer>
     </div>
 
