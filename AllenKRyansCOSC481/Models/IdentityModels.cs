@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+
 using AllenKRyansCOSC481.DAL;
+
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -19,34 +22,34 @@ namespace AllenKRyansCOSC481.Models
             return userIdentity;
         }
 
-        //public IEnumerable<Order> GetOrders()
-        //{
-        //    IEnumerable<Order> orders;
+        private IEnumerable<Order> GetOrders()
+        {
+            IEnumerable<Order> orders;
 
-        //    using (var restaurantContext = new RestaurantContext())
-        //    {
-        //        IQueryable<Order> ordersQueriable = from temp in restaurantContext.Orders select temp;
-        //        orders = ordersQueriable.ToList();
-        //    }
+            using (var restaurantContext = new RestaurantContext())
+            {
+                // TODO: Add OrderItem to link between the two tables and avoid getting the entire table everytime.
+                orders = restaurantContext.Orders;
+            }
 
-        //    return orders;
-        //}
+            return orders;
+        }
 
-        //private IEnumerable<Order> _orders;
-        //public IEnumerable<Order> Orders
-        //{
-        //    get
-        //    {
-        //        if (!_orders.Any())
-        //        {
-        //            _orders = GetOrders();
-        //            return _orders;
-        //        }
+        public IEnumerable<Order> ActiveOrders
+        {
+            get
+            {
+                return GetOrders()?.Where(order => (DateTime.Now - order.CreatedDate).TotalMinutes <= 15);
+            }
+        }
 
-        //        return _orders;
-        //    }
-        //    set { _orders = value; }
-        //}
+        public IEnumerable<Order> PreviousOrders
+        {
+            get
+            {
+                return GetOrders()?.Where(order => (DateTime.Now - order.CreatedDate).TotalMinutes > 15);
+            }
+        }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
