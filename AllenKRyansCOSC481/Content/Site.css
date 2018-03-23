@@ -1,4 +1,24 @@
-﻿body 
+﻿@media screen and (min-width: 980px) /* Desktop */ 
+{
+    .item 
+    {
+        width: 32%;
+        padding: 10px;
+        float: left;
+    }
+}
+
+@media screen and (max-width: 979px) /* Tablet and Phone */ 
+{
+    .item 
+    {
+        width: 100%;
+        padding: 10px;
+        float: left;
+    }
+}
+
+body 
 {
     padding-top: 50px;
     padding-bottom: 20px;
@@ -86,12 +106,6 @@ textarea
 {
 }
 
-.item 
-{
-    width: 33%;
-    padding: 10px;
-    float: left;
-}
 
 .item-img 
 {
@@ -126,31 +140,10 @@ textarea
     color: black;
 }
 
-body 
-{
-    padding-top: 50px;
-    padding-bottom: 20px;
+.hoverable:hover {
+    cursor: pointer;
 }
 
-/* Set padding to keep content from hitting the edges */
-.body-content 
-{
-    padding-left: 15px;
-    padding-right: 15px;
-}
-
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
-.dl-horizontal dt 
-{
-    white-space: normal;
-}
-
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea 
-{
-    max-width: 280px;
+.dspacer {
+    min-height: 200px
 }

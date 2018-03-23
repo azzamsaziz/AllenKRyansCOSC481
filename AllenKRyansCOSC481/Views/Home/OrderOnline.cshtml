@@ -29,41 +29,36 @@
 
 <div class="item-container">
     <!-- to be replaced with automated divs formed from DB -->
-    
+
     @{
         List<Item> items = new List<Item>();
         foreach (var item in Model)
         {
             items.Add(item);
         }
-
-        ItemType old = ItemType.BAD_DATA;
         int start = 0;
+        ItemType old = ItemType.BAD_DATA;
         const string grp = "itemGroup";
         int igrp = 1;
+
         for (int i = 0; i < items.Count; i++)
         {
-            //sort by type!!!!
             if (old != items[i].Type)
             {
-                if (i != 0)
-                {
-                    @Html.Raw("</div>");
-                }
-                // @Html.Raw("<br/>");
-
-                start = i;
                 old = items[i].Type;
                 if (i == 0)
                 {
-                    @Html.Raw("<div id='" + grp + igrp++ + "'>");
+                    @Html.Raw("<div id='" + grp + igrp++ + "'>"); //open first item group
                 }
                 else
                 {
-                    @Html.Raw("<div id='" + grp + igrp++ + "' style='display: none;'>");
+                    start = 0;
+                    @Html.Raw("</div>"); //end previous row
+                    @Html.Raw("</div>"); //end previous itemgroup
+                    @Html.Raw("<div id='" + grp + igrp++ + "' style='display: none;'>"); //open not first item group
                 }
 
-
+                /*  SWITCH FOR HEADER TAG OF THE ITEM DIV */
                 switch (items[i].Type)
                 {
                     case ItemType.PARTY_PACK:
@@ -100,27 +95,30 @@
                         @Html.Raw("<h1>Other</h1>");
                         break;
                 }
-
-
+                /*  END OF SWITCH */
+                @Html.Raw("<div class='row'>"); //begin first row div
             }
-            //@Html.Raw("</div>");
 
-
-
-            @Html.Raw("<div class=\"item\">");
-            @Html.Raw("<h3>" + items[i].Name + "</h3>");//replace with db value for name
-            @Html.Raw("<p>" + items[i].Description + "</p>");//replace item descriptions
-            @Html.Raw("<p>$" + items[i].Price.ToString("0.00") + "</p>");//replace with value from db
-            @Html.Raw("<label>Quantity:<input class='nmbrsz' type='number' min='1' max='10' value='1' /></label>");
-            @Html.Raw("<hr/>");
+            @Html.Raw("<div class='item'>"); //begin item div
+            @Html.Raw("<h3>" + items[i].Name + "</h3>");
+            @Html.Raw("<p>" + items[i].Description + "</p>");
+            @Html.Raw("<p>$" + items[i].Price.ToString("0.00") + "</p>");
+            @Html.Raw("<label>Quantity: <input class='nmbrsz' type='number' min='1' max='10' value='1' /></label>");
+            <br />
             @Html.Raw("<button>Add to Cart</button>");
-            @Html.Raw("</div>");
+            @Html.Raw("</div>"); //end item div
 
-
+            start++;
+            if (start % 3 == 0)
+            {
+                @Html.Raw("</div>"); //end row div
+                @Html.Raw("<div class='row'>"); //begin not first row div
+            }
         }
-        @Html.Raw("</div>");
-
+        @Html.Raw("</div>"); // end last item group div
     }
-    @Html.Raw("<input type='hidden' id='ocount' name='ocount' value='" + igrp + "'/>");
-    <script src="~/Scripts/OrderPage.js"></script>
+    @Html.Raw("</div>")
 </div>
+@Html.Raw("<input type='hidden' id='ocount' name='ocount' value='" + igrp + "'/>")
+<script src="~/Scripts/OrderPage.js"></script>
+<div class="dspacer"></div>
