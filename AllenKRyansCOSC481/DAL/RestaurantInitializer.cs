@@ -16,13 +16,7 @@ namespace AllenKRyansCOSC481.DAL
                 new Item{ Name = "50 Piece Party Pack", Price = 115.99, Type = ItemType.PARTY_PACK, Description = "50 pieces of great chicken, full pan of potato wedges, a half pan of our famous homemade coleslaw and bread. Enough for 24–30 people." },
                 new Item{ Name = "Full Pan of Ribs", Price = 104.95, Type = ItemType.PARTY_PACK, Description = "Approximately five slabs of BBQ ribs cut into two-bone sections. 28–30 pieces. Designed to go with our 50-piece party pack." },
                 new Item{ Name = "Half Pan of Ribs", Price = 62.97, Type = ItemType.PARTY_PACK, Description = "Approximately three slabs of our mouth-watering BBQ ribs cut into two-bone sections. 16–18 pieces. Designed to go with our 30-piece party pack." },
-
-                // Ribs by Themselves
-                new Item{ Name = "4 Bones", Price = 7.99, Type = ItemType.RIBS_ALONE, Description = "" },
-                new Item{ Name = "6 Bones", Price = 10.99, Type = ItemType.RIBS_ALONE, Description = "" },
-                new Item{ Name = "8 Bones", Price = 14.99, Type = ItemType.RIBS_ALONE, Description = "" },
-                new Item{ Name = "Full Slab", Price = 20.99, Type = ItemType.RIBS_ALONE, Description = "" },
-
+                
                 // Buckets
                 new Item{ Name = "Family Chicken and Rib Combo", Price = 36.99, Type = ItemType.BUCKET, Description = "Eight pieces of chicken, one whole slab of ribs, potatoes, cole slaw & bread. Feeds 3–4 people." },
                 new Item{ Name = "Family Value Bucket", Price = 20.99, Type = ItemType.BUCKET, Description = "10 pieces plus potato, and a pint of cole slaw & bread." },
@@ -31,12 +25,18 @@ namespace AllenKRyansCOSC481.DAL
                 new Item{ Name = "Bucket of 10 Wings", Price = 11.49, Type = ItemType.BUCKET, Description = "BBQ, Plain, or Half-and-Half." },
                 new Item{ Name = "10 pc Cod Bucket", Price = 30.99, Type = ItemType.BUCKET, Description = "Plus potato and pint of coleslaw." },
 
-                // Chicken by Itself
+               // Chicken by Itself
                 new Item{ Name = "Broasted Chicken Breast", Price = 2.69, Type = ItemType.CHICKEN_ALONE, Description = "" },
                 new Item{ Name = "Grilled Chicken Breast", Price = 2.99, Type = ItemType.CHICKEN_ALONE, Description = "" },
                 new Item{ Name = "Chicken Wings", Price = 1.19, Type = ItemType.CHICKEN_ALONE, Description = "" },
                 new Item{ Name = "Chicken Leg", Price = 1.39, Type = ItemType.CHICKEN_ALONE, Description = "" },
                 new Item{ Name = "Chicken Thigh", Price = 1.89, Type = ItemType.CHICKEN_ALONE, Description = "" },
+
+                // Ribs by Themselves
+                new Item{ Name = "4 Bones", Price = 7.99, Type = ItemType.RIBS_ALONE, Description = "" },
+                new Item{ Name = "6 Bones", Price = 10.99, Type = ItemType.RIBS_ALONE, Description = "" },
+                new Item{ Name = "8 Bones", Price = 14.99, Type = ItemType.RIBS_ALONE, Description = "" },
+                new Item{ Name = "Full Slab", Price = 20.99, Type = ItemType.RIBS_ALONE, Description = "" },
 
                 // Mixed Chicken
                 // Additional charge for all white meat or barbecued.
