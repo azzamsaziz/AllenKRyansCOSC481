@@ -5,7 +5,7 @@ using System.Data.Entity;
 
 namespace AllenKRyansCOSC481.DAL
 {
-    public class RestaurantInitializer : DropCreateDatabaseIfModelChanges<RestaurantContext>
+    public class RestaurantInitializer : DropCreateDatabaseAlways<RestaurantContext>
     {
         protected override void Seed(RestaurantContext context)
         {

@@ -1,0 +1,124 @@
+﻿@using AllenKRyansCOSC481.Models;
+@model IEnumerable<AllenKRyansCOSC481.Models.Item>
+@{
+    ViewBag.Title = "OrderOnline";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<center><h2>Order Online</h2></center>
+<div class="navbar navbar-default">
+    <div class="container">
+        <!-- needs a class -->
+        <div class="">
+            <ul class="nav navbar-nav navcent">
+                <li><a class="hoverable" id="grp1" onclick="visibility(1)">Party Packs</a></li>
+                <li><a class="hoverable" id="grp2" onclick="visibility(2)">Buckets</a></li>
+                <li><a class="hoverable" id="grp3" onclick="visibility(3)">Chicken</a></li>
+                <li><a class="hoverable" id="grp4" onclick="visibility(4)">Ribs</a></li>
+                <li><a class="hoverable" id="grp5" onclick="visibility(5)">Mixed Chicken</a></li>
+                <li><a class="hoverable" id="grp6" onclick="visibility(6)">Appetizers</a></li>
+                <li><a class="hoverable" id="grp7" onclick="visibility(7)">Salads</a></li>
+                <li><a class="hoverable" id="grp8" onclick="visibility(8)">Sandwiches</a></li>
+                <li><a class="hoverable" id="grp9" onclick="visibility(9)">Chicken & Ribs</a></li>
+                <li><a class="hoverable" id="grp10" onclick="visibility(10)">Combinations</a></li>
+                <li><a class="hoverable" id="grp11" onclick="visibility(11)">Other</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="item-container">
+    <!-- to be replaced with automated divs formed from DB -->
+        @{
+            List<Item> items = new List<Item>();
+            foreach (var item in Model)
+            {
+                items.Add(item);
+            }
+
+            int start = 0;
+            ItemType old = ItemType.BAD_DATA;
+            const string grp = "itemGroup";
+            int igrp = 1;
+            for (int i = 0; i < items.Count; i++)
+            {
+                if (old != items[i].Type)
+                {
+                    old = items[i].Type;
+                    
+                    if (i == 0)
+                    {
+                        @Html.Raw("<div id='" + grp + igrp + "'>"); //open first item group
+                    }
+                    else
+                    {
+                        start = 0;
+                        @Html.Raw("</div>"); //end previous row
+                        @Html.Raw("</div>"); //end previous itemgroup
+                        @Html.Raw("<div id='" + grp + igrp + "' style='display: none;'>"); //open not first item group
+                    }
+                    igrp++;
+                    /*  SWITCH FOR HEADER TAG OF THE ITEM DIV */
+                    switch (items[i].Type)
+                    {
+                        case ItemType.PARTY_PACK:
+                            @Html.Raw("<h1>Party Packs</h1>");
+                            break;
+                        case ItemType.APPETIZER_SIDE:
+                            @Html.Raw("<h1>Appetizers</h1>");
+                            break;
+                        case ItemType.BUCKET:
+                            @Html.Raw("<h1>Buckets</h1>");
+                            break;
+                        case ItemType.CHICKEN_ALONE:
+                            @Html.Raw("<h1>Chicken</h1>");
+                            break;
+                        case ItemType.CHICKEN_RIBS:
+                            @Html.Raw("<h1>Chicken and Ribs</h1>");
+                            break;
+                        case ItemType.COMBO:
+                            @Html.Raw("<h1>Combinations</h1>");
+                            break;
+                        case ItemType.MIXED_CHICKEN:
+                            @Html.Raw("<h1>Mixed Chicken</h1>");
+                            break;
+                        case ItemType.RIBS_ALONE:
+                            @Html.Raw("<h1>Ribs</h1>");
+                            break;
+                        case ItemType.SALAD:
+                            @Html.Raw("<h1>Salad</h1>");
+                            break;
+                        case ItemType.SANDWICH_BURGER:
+                            @Html.Raw("<h1>Sandwiches and Burgers</h1>");
+                            break;
+                        case ItemType.OTHER:
+                            @Html.Raw("<h1>Other</h1>");
+                            break;
+                    }
+                    /*  END OF SWITCH */
+                    @Html.Raw("<div class='row'>"); //begin first row div
+                }
+
+                @Html.Raw("<div class='item'>"); //begin item div
+                @Html.Raw("<h3>" + items[i].Name + "</h3>");
+                @Html.Raw("<p>" + items[i].Description + "</p>");
+                @Html.Raw("<p>$" + items[i].Price.ToString("0.00") + "</p>");
+                @Html.Raw("<label>Quantity: <input class='nmbrsz' type='number' min='1' max='10' value='1' /></label>");
+                <br />
+                @Html.Raw("<button>Add to Cart</button>");
+                @Html.Raw("</div>"); //end item div
+
+                start++;
+                if (start % 3 == 0)
+                {
+                    @Html.Raw("</div>"); //end row div
+                    @Html.Raw("<div class='row'>"); //begin not first row div
+                }
+            }
+            @Html.Raw("</div>"); // end last item group div
+        }
+        @Html.Raw("</div>")
+</div>
+@Html.Raw("<input type='hidden' id='ocount' name='ocount' value='" + igrp + "'/>")
+<script src="~/Scripts/OrderPage.js"></script>
+<div class="dspacer"></div>
