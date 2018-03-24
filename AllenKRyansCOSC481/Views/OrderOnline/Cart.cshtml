@@ -1,0 +1,11 @@
+﻿@using AllenKRyansCOSC481.Models;
+@model IEnumerable<AllenKRyansCOSC481.Models.Item>
+@{
+    ViewBag.Title = "Cart";
+}
+
+<h2>Cart</h2>
+@{
+    List<Item> menu = new List<Item>(Model);
+}
+<p>@menu.Count</p>

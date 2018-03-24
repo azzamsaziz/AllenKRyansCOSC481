@@ -193,6 +193,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\OrderOnlineController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="DAL\RestaurantContext.cs" />
     <Compile Include="DAL\RestaurantInitializer.cs" />
@@ -227,6 +228,7 @@
     </Content>
     <Content Include="Images\menu-2016.pdf" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\FB_jscode.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -235,6 +237,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\OrderPage.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Web.config" />
@@ -281,7 +284,9 @@
     <Content Include="Views\Orders\Details.cshtml" />
     <Content Include="Views\Orders\Edit.cshtml" />
     <Content Include="Views\Orders\Index.cshtml" />
-    <Content Include="Views\Home\OrderOnline.cshtml" />
+    <Content Include="Views\OrderOnline\Cart.cshtml" />
+    <Content Include="Views\Home\Menu.cshtml" />
+    <Content Include="Views\OrderOnline\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

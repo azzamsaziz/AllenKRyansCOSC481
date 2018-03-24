@@ -10,7 +10,7 @@ namespace AllenKRyansCOSC481.Controllers
 {
     public class HomeController : Controller
     {
-        private RestaurantContext db = new RestaurantContext();
+        
 
         public ActionResult Index()
         {
@@ -34,11 +34,5 @@ namespace AllenKRyansCOSC481.Controllers
             return View();
         }
 
-        public ActionResult OrderOnline()
-        {
-            ViewBag.Message = "Your Online Order";
-
-            return View(db.Items.OrderBy(x => x.Type));
-        }
     }
 }
