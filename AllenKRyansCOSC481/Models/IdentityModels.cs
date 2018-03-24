@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -11,6 +12,14 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace AllenKRyansCOSC481.Models
 {
+    public enum UserRoles
+    {
+        [Description("Admin")]
+        ADMIN,
+        [Description("Customer")]
+        CUSTOMER
+    }
+
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {

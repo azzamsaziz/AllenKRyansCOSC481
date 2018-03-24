@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using AllenKRyansCOSC481.Models;
+using System.Collections.Generic;
 
 namespace AllenKRyansCOSC481.Controllers
 {
@@ -63,7 +64,8 @@ namespace AllenKRyansCOSC481.Controllers
                 : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
                 : string.Empty;
 
-            var userId = User.Identity.GetUserId();          
+            var userId = User.Identity.GetUserId();
+
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),
@@ -215,7 +217,7 @@ namespace AllenKRyansCOSC481.Controllers
 
         //
         // GET: /Manage/ChangePassword
-        public ActionResult ChangePassword()
+        public ActionResult ChangeAccountInfo()
         {
             return View();
         }
@@ -224,13 +226,14 @@ namespace AllenKRyansCOSC481.Controllers
         // POST: /Manage/ChangePassword
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
+        public async Task<ActionResult> ChangeAccountInfo(ChangeAccountInfoViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
             var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+            result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
             if (result.Succeeded)
             {
                 var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
@@ -242,6 +245,22 @@ namespace AllenKRyansCOSC481.Controllers
             }
             AddErrors(result);
             return View(model);
+        }
+
+        //
+        // GET: /Manage/ChangePassword
+        public ActionResult ViewPreviousOrders()
+        {
+            return View();
+        }
+
+        //
+        // POST: /Manage/ChangePassword
+        [HttpPost]
+        public ActionResult ViewPreviousOrders(List<Order> previousOrders)
+        {
+
+            return View();
         }
 
         //
