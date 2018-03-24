@@ -138,8 +138,8 @@ namespace AllenKRyansCOSC481.DAL
                 new Item{ Name = "Chicken and Ribs (Large Combo)", Price = 16.49, Type = ItemType.COMBO, Description = "2 piece chicken, 6 bone rib." },
                 new Item{ Name = "Ribs and Shrimp (Small Combo)", Price = 14.99, Type = ItemType.COMBO, Description = "3 bone rib, 4 piece shrimp." },
                 new Item{ Name = "Ribs and Shrimp (Large Combo)", Price = 17.49, Type = ItemType.COMBO, Description = "6 bone rib, 6 piece shrimp." },
-                new Item{ Name = "Chicken and Shrimp (Large Combo)", Price = 15.49, Type = ItemType.COMBO, Description = "2 piece chicken, 6 piece shrimp." },
                 new Item{ Name = "Chicken and Shrimp (Small Combo)", Price = 12.99, Type = ItemType.COMBO, Description = " 2 piece chicken, 4 piece shrimp." },
+                new Item{ Name = "Chicken and Shrimp (Large Combo)", Price = 15.49, Type = ItemType.COMBO, Description = "2 piece chicken, 6 piece shrimp." },  
                 new Item{ Name = "Triple Play", Price = 16.99, Type = ItemType.COMBO, Description = "2 pieces of chicken, three shrimp and 3 bones of barbeque ribs." }
             };
 
