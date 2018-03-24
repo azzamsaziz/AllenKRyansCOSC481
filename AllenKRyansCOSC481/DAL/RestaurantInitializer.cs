@@ -23,7 +23,7 @@ namespace AllenKRyansCOSC481.DAL
                 new Item{ Name = "Large Bucket", Price = 32.99, Type = ItemType.BUCKET, Description = "16 pieces plus 2 potatoes, 1 cole slaw & bread." },
                 new Item{ Name = "X-Large Bucket", Price = 42.99, Type = ItemType.BUCKET, Description = "24 pieces plus 2 potatoes, 2 cole slaw & bread." },
                 new Item{ Name = "Bucket of 10 Wings", Price = 11.49, Type = ItemType.BUCKET, Description = "BBQ, Plain, or Half-and-Half." },
-                new Item{ Name = "10 pc Cod Bucket", Price = 30.99, Type = ItemType.BUCKET, Description = "Plus potato and pint of coleslaw." },
+                new Item{ Name = "10 Piece Cod Bucket", Price = 30.99, Type = ItemType.BUCKET, Description = "Plus potato and pint of coleslaw." },
 
                // Chicken by Itself
                 new Item{ Name = "Broasted Chicken Breast", Price = 2.69, Type = ItemType.CHICKEN_ALONE, Description = "" },
@@ -125,10 +125,10 @@ namespace AllenKRyansCOSC481.DAL
                 new Item{ Name = "House Cut", Price = 17.99, Type = ItemType.CHICKEN_RIBS, Description = "About 8 bones." },
                 new Item{ Name = "Half Slab", Price = 13.99, Type = ItemType.CHICKEN_RIBS, Description = "About 6 bones." },
                 new Item{ Name = "Lite Rib", Price = 10.99, Type = ItemType.CHICKEN_RIBS, Description = "About 4 bones." },
-                new Item{ Name = "Shrimp Half Portion (6 piece)", Price = 8.99, Type = ItemType.CHICKEN_RIBS, Description = "Plump shrimp, lightly breaded." },
-                new Item{ Name = "Shrimp Full Portion (10 piece)", Price = 13.99, Type = ItemType.CHICKEN_RIBS, Description = "Plump shrimp, lightly breaded." },
-                new Item{ Name = "Fish & Chips Half Portion (2 piece)", Price = 7.99, Type = ItemType.CHICKEN_RIBS, Description = "Lightly floured cod." },
-                new Item{ Name = "Fish & Chips Full Portion (3 piece)", Price = 9.99, Type = ItemType.CHICKEN_RIBS, Description = "Lightly floured cod." },
+                new Item{ Name = "Shrimp Half Portion (6 Piece)", Price = 8.99, Type = ItemType.CHICKEN_RIBS, Description = "Plump shrimp, lightly breaded." },
+                new Item{ Name = "Shrimp Full Portion (10 Piece)", Price = 13.99, Type = ItemType.CHICKEN_RIBS, Description = "Plump shrimp, lightly breaded." },
+                new Item{ Name = "Fish & Chips Half Portion (2 Piece)", Price = 7.99, Type = ItemType.CHICKEN_RIBS, Description = "Lightly floured cod." },
+                new Item{ Name = "Fish & Chips Full Portion (3 Piece)", Price = 9.99, Type = ItemType.CHICKEN_RIBS, Description = "Lightly floured cod." },
                 new Item{ Name = "2 Grilled Chicken Breasts", Price = 9.99, Type = ItemType.CHICKEN_RIBS, Description = "Marinated just right." },
                 new Item{ Name = "Chicken Tender Dinner", Price = 9.49, Type = ItemType.CHICKEN_RIBS, Description = "100% white meat Broaster Recipe" },
 
@@ -138,8 +138,8 @@ namespace AllenKRyansCOSC481.DAL
                 new Item{ Name = "Chicken and Ribs (Large Combo)", Price = 16.49, Type = ItemType.COMBO, Description = "2 piece chicken, 6 bone rib." },
                 new Item{ Name = "Ribs and Shrimp (Small Combo)", Price = 14.99, Type = ItemType.COMBO, Description = "3 bone rib, 4 piece shrimp." },
                 new Item{ Name = "Ribs and Shrimp (Large Combo)", Price = 17.49, Type = ItemType.COMBO, Description = "6 bone rib, 6 piece shrimp." },
-                new Item{ Name = "Chicken and Shrimp (Large Combo)", Price = 15.49, Type = ItemType.COMBO, Description = "2 piece chicken, 6 pc shrimp." },
-                new Item{ Name = "Chicken and Shrimp (Small Combo)", Price = 12.99, Type = ItemType.COMBO, Description = " 2 piece chicken, 4 pc shrimp." },
+                new Item{ Name = "Chicken and Shrimp (Small Combo)", Price = 12.99, Type = ItemType.COMBO, Description = " 2 piece chicken, 4 piece shrimp." },
+                new Item{ Name = "Chicken and Shrimp (Large Combo)", Price = 15.49, Type = ItemType.COMBO, Description = "2 piece chicken, 6 piece shrimp." },  
                 new Item{ Name = "Triple Play", Price = 16.99, Type = ItemType.COMBO, Description = "2 pieces of chicken, three shrimp and 3 bones of barbeque ribs." }
             };
 
