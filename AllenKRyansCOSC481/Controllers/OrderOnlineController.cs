@@ -11,14 +11,31 @@ namespace AllenKRyansCOSC481.Controllers
     public class OrderOnlineController : Controller
     {
         private RestaurantContext db = new RestaurantContext();
-        private List<Item> cart = new List<Item>();
+        static private List<Item> cart = new List<Item>();
+        static private List<Item> menu = new List<Item>();
+
+        public ActionResult AddToCart(int num)
+        {
+            cart.Add(menu[num]);
+            return RedirectToAction("Cart");
+        }
+
+        public ActionResult Cart()
+        {
+            return View(cart);
+        }
 
         // GET: OrderOnline
         public ActionResult Index()
         {
             ViewBag.Message = "Your Online Order";
+            IEnumerable<Item> Model = db.Items.OrderBy(x => x.Type);
+            foreach(var item in Model)
+            {
+                menu.Add(item);
+            }
 
-            return View(db.Items.OrderBy(x => x.Type));
+            return View(menu);
         }
     }
 }

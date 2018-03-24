@@ -284,7 +284,7 @@
     <Content Include="Views\Orders\Details.cshtml" />
     <Content Include="Views\Orders\Edit.cshtml" />
     <Content Include="Views\Orders\Index.cshtml" />
-    <Content Include="Views\Home\Cart.cshtml" />
+    <Content Include="Views\OrderOnline\Cart.cshtml" />
     <Content Include="Views\Home\Menu.cshtml" />
     <Content Include="Views\OrderOnline\Index.cshtml" />
   </ItemGroup>
