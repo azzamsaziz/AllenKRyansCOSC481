@@ -30,7 +30,7 @@
             [
             @if (Model.HasPassword)
             {
-                @Html.ActionLink("View", "ViewPreviousOrders")
+                @Html.ActionLink("View", "ViewPreviousOrders", new { email = Model.Email })
             }
             ]
         </dd>

@@ -287,6 +287,7 @@
     <Content Include="Views\OrderOnline\Cart.cshtml" />
     <Content Include="Views\Home\Menu.cshtml" />
     <Content Include="Views\OrderOnline\Index.cshtml" />
+    <Content Include="Views\Manage\ViewPreviousOrders.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

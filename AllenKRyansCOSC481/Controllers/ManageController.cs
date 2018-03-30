@@ -8,12 +8,14 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using AllenKRyansCOSC481.Models;
 using System.Collections.Generic;
+using AllenKRyansCOSC481.DAL;
 
 namespace AllenKRyansCOSC481.Controllers
 {
     [Authorize]
     public class ManageController : Controller
     {
+        //private RestaurantContext db = new RestaurantContext();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -70,6 +72,7 @@ namespace AllenKRyansCOSC481.Controllers
             {
                 HasPassword = HasPassword(),
                 PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
+                Email = await UserManager.GetEmailAsync(userId),
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
                 Logins = await UserManager.GetLoginsAsync(userId),
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
@@ -216,14 +219,14 @@ namespace AllenKRyansCOSC481.Controllers
         }
 
         //
-        // GET: /Manage/ChangePassword
+        // GET: /Manage/ChangeAccountInfo
         public ActionResult ChangeAccountInfo()
         {
             return View();
         }
 
         //
-        // POST: /Manage/ChangePassword
+        // POST: /Manage/ChangeAccountInfo
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ChangeAccountInfo(ChangeAccountInfoViewModel model)
@@ -248,18 +251,25 @@ namespace AllenKRyansCOSC481.Controllers
         }
 
         //
-        // GET: /Manage/ChangePassword
-        public ActionResult ViewPreviousOrders()
+        // GET: /Manage/ViewPreviousOrders
+        public ActionResult ViewPreviousOrders(string email)
         {
-            return View();
+            var user = UserManager.FindByEmail(email);
+            var list = new List<Order>();
+            var previousOrders = user.PreviousOrders.ToList();
+            var activeOrders = user.ActiveOrders.ToList();
+            list.AddRange(activeOrders);
+            list.AddRange(previousOrders);
+
+            return View(list);
         }
 
         //
-        // POST: /Manage/ChangePassword
+        // POST: /Manage/ViewPreviousOrders
         [HttpPost]
-        public ActionResult ViewPreviousOrders(List<Order> previousOrders)
+        public ActionResult ViewPreviousOrders()
         {
-
+            
             return View();
         }
 
