@@ -32,6 +32,9 @@ namespace AllenKRyansCOSC481.Models
             return userIdentity;
         }
 
+        //public string FirstName { get; set; }
+        //public string LastName { get; set; }
+
         private IEnumerable<Order> GetOrders()
         {
             IEnumerable<Order> orders;
