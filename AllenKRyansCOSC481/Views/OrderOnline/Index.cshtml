@@ -101,8 +101,7 @@
             @Html.Raw("<p>$" + items[i].Price.ToString("0.00") + "</p>");
             @Html.Raw("<label>Quantity: <input class='nmbrsz' type='number' min='1' max='10' value='1' /></label>");
             <br />
-
-            /*@Html.Raw("<button>Add to Cart</button>"); FIX BUTTON TO c# buttons */
+            
             <button type="button" onclick="location.href='@Url.Action("AddToCart","OrderOnline", new { num=i })'">Add to Cart</button>
             @Html.Raw("</div>"); //end item div
 
