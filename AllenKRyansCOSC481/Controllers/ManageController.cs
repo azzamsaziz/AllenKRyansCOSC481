@@ -7,12 +7,15 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using AllenKRyansCOSC481.Models;
+using System.Collections.Generic;
+using AllenKRyansCOSC481.DAL;
 
 namespace AllenKRyansCOSC481.Controllers
 {
     [Authorize]
     public class ManageController : Controller
     {
+        //private RestaurantContext db = new RestaurantContext();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -63,11 +66,13 @@ namespace AllenKRyansCOSC481.Controllers
                 : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
                 : string.Empty;
 
-            var userId = User.Identity.GetUserId();          
+            var userId = User.Identity.GetUserId();
+
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),
                 PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
+                Email = await UserManager.GetEmailAsync(userId),
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
                 Logins = await UserManager.GetLoginsAsync(userId),
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
@@ -214,23 +219,24 @@ namespace AllenKRyansCOSC481.Controllers
         }
 
         //
-        // GET: /Manage/ChangePassword
-        public ActionResult ChangePassword()
+        // GET: /Manage/ChangeAccountInfo
+        public ActionResult ChangeAccountInfo()
         {
             return View();
         }
 
         //
-        // POST: /Manage/ChangePassword
+        // POST: /Manage/ChangeAccountInfo
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
+        public async Task<ActionResult> ChangeAccountInfo(ChangeAccountInfoViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
             var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+            result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
             if (result.Succeeded)
             {
                 var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
@@ -242,6 +248,29 @@ namespace AllenKRyansCOSC481.Controllers
             }
             AddErrors(result);
             return View(model);
+        }
+
+        //
+        // GET: /Manage/ViewPreviousOrders
+        public ActionResult ViewPreviousOrders(string email)
+        {
+            var user = UserManager.FindByEmail(email);
+            var list = new List<Order>();
+            var previousOrders = user.PreviousOrders.ToList();
+            var activeOrders = user.ActiveOrders.ToList();
+            list.AddRange(activeOrders);
+            list.AddRange(previousOrders);
+
+            return View(list);
+        }
+
+        //
+        // POST: /Manage/ViewPreviousOrders
+        [HttpPost]
+        public ActionResult ViewPreviousOrders()
+        {
+            
+            return View();
         }
 
         //
