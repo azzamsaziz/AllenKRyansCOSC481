@@ -35,9 +35,6 @@ namespace AllenKRyans.Helpers
                 OrderNote = "This is a note"
             };
 
-            //order.Items.Add(new Item(5.0, ItemType.BUCKET, "chicken", "this is frickin chicken"));// test data
-            //order.Items.Add(new Item(6.0, ItemType.BUCKET, "taters", "this is not frickin chicken"));// more test data
-
             // get the user info
 
             // send 2 emails (1 to customer from admin, 1 to akr email and a separate online ordering akr email)

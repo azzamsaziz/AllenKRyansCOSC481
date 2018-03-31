@@ -10,8 +10,6 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 
 using AllenKRyansCOSC481.Models;
-using Microsoft.AspNet.Identity.EntityFramework;
-using AllenKRyansCOSC481.DAL;
 
 namespace AllenKRyansCOSC481.Controllers
 {

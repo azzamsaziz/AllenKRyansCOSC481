@@ -24,7 +24,7 @@ namespace AllenKRyansCOSC481.Controllers
             {
                 Session["cart"] = new List<CartItem>();
                 var lst = (List<CartItem>)(Session["cart"]);
-                lst.Add(new CartItem { item = menu[num], count = Request[]  });
+                //lst.Add(new CartItem { item = menu[num], count = Request[]  });
             }
             else
             {
