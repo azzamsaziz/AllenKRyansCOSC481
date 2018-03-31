@@ -69,14 +69,16 @@ namespace AllenKRyansCOSC481.Models
     {
         [Required]
         [Display(Name = "First Name")]
+        [StringLength(255)]
         public string FirstName { get; set; }
 
         [Required]
         [Display(Name = "Last Name")]
+        [StringLength(255)]
         public string LastName { get; set; }
 
         [Required]
-        [EmailAddress]
+        [DataType(DataType.PhoneNumber)]
         [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
 
