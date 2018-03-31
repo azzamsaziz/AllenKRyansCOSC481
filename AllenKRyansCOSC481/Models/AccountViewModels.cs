@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNet.Identity;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace AllenKRyansCOSC481.Models
@@ -60,6 +61,8 @@ namespace AllenKRyansCOSC481.Models
 
         [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; }
+
+        public string UserRoles { get; }
     }
 
     public class RegisterViewModel
@@ -92,6 +95,8 @@ namespace AllenKRyansCOSC481.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        public string UserRoles { get; } = "Customer";
     }
 
     public class ResetPasswordViewModel
