@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -32,8 +34,8 @@ namespace AllenKRyansCOSC481.Models
             return userIdentity;
         }
 
-        //public string FirstName { get; set; }
-        //public string LastName { get; set; }
+        public string FirstName { get; set; } = string.Empty;
+        public string LastName { get; set; } = string.Empty;
 
         private IEnumerable<Order> GetOrders()
         {
@@ -64,7 +66,7 @@ namespace AllenKRyansCOSC481.Models
             }
         }
     }
-
+    
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()

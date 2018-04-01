@@ -79,10 +79,12 @@ namespace AllenKRyansCOSC481.Controllers
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var user = UserManager.FindByEmail(model.Email);
+
             switch (result)
             {
                 case SignInStatus.Success:
-                    if (model.UserRoles == "Admin")
+                    if (UserManager.IsInRole(user.Id, "Admin"))
                     {
                         return RedirectToAction("Index", "Orders");
                     }
@@ -161,9 +163,15 @@ namespace AllenKRyansCOSC481.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);              
+                var user = new ApplicationUser
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName
+                };
 
+                var result = await UserManager.CreateAsync(user, model.Password);              
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
