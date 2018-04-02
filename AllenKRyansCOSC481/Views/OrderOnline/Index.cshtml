@@ -16,8 +16,7 @@
                 <li><a class="hoverable" id="grp3" onclick="visibility(3)">Chicken</a></li>
                 <li><a class="hoverable" id="grp4" onclick="visibility(4)">Ribs</a></li>
                 <li><a class="hoverable" id="grp5" onclick="visibility(5)">Mixed Chicken</a></li>
-                <li><a class="hoverable" id="grp6" onclick="visibility(6)">Appetizers</a></li>
-                <li><a class="hoverable" id="grp7" onclick="visibility(7)">Salads</a></li>
+                <li><a class="hoverable" id="grp6" onclick="visibility(6)">Appetizers</ap>
                 <li><a class="hoverable" id="grp8" onclick="visibility(8)">Sandwiches</a></li>
                 <li><a class="hoverable" id="grp9" onclick="visibility(9)">Chicken & Ribs</a></li>
                 <li><a class="hoverable" id="grp10" onclick="visibility(10)">Combinations</a></li>
@@ -29,6 +28,7 @@
 
 <div class="item-container">
     <!-- to be replaced with automated divs formed from DB -->
+
     @{
         List<Item> items = new List<Item>(Model);
 
@@ -36,6 +36,9 @@
         ItemType old = ItemType.BAD_DATA;
         const string grp = "itemGroup";
         int igrp = 1;
+
+
+
         for (int i = 0; i < items.Count; i++)
         {
             if (old != items[i].Type)
@@ -99,22 +102,29 @@
             @Html.Raw("<h3>" + items[i].Name + "</h3>");
             @Html.Raw("<p style='text-align: justify;'>" + items[i].Description + "</p>");
             @Html.Raw("<p>$" + items[i].Price.ToString("0.00") + "</p>");
-            @Html.Raw("<label>Quantity: <input class='nmbrsz' type='number' min='1' max='10' value='1' /></label>");
-            <br />
             
-            <button type="button" onclick="location.href='@Url.Action("AddToCart","OrderOnline", new { num=i })'">Add to Cart</button>
+            using (Html.BeginForm("AddToCart", "OrderOnline", FormMethod.Post))
+            {
+                @Html.TextBox("Quantity"+@i, 1, new { @type = "number", min = 1, max = 10, @class="nmbrsz" });
+                <input type="hidden" name="num" value="@i"/>
+                <input type="submit" name="AddToCart" value="Add to Cart"/>
+            }
+            <br />
+
+
             @Html.Raw("</div>"); //end item div
 
-                    start++;
-                    if (start % 3 == 0)
-                    {
-                        @Html.Raw("</div>"); //end row div
-                        @Html.Raw("<div class='row'>"); //begin not first row div
-                    }
-                }
-                @Html.Raw("</div>"); // end last item group div
+            start++;
+            if (start % 3 == 0)
+            {
+                @Html.Raw("</div>"); //end row div
+                @Html.Raw("<div class='row'>"); //begin not first row div
             }
-            @Html.Raw("</div>")
+        }
+    }
+    @Html.Raw("</div>"); // end last item group div
+
+    @Html.Raw("</div>")
 </div>
 @Html.Raw("<input type='hidden' id='ocount' name='ocount' value='" + igrp + "'/>")
 <script src="~/Scripts/OrderPage.js"></script>
