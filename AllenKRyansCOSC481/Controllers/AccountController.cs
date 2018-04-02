@@ -10,8 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 
 using AllenKRyansCOSC481.Models;
-using Microsoft.AspNet.Identity.EntityFramework;
-using AllenKRyansCOSC481.DAL;
+using System;
 
 namespace AllenKRyansCOSC481.Controllers
 {
@@ -23,6 +22,7 @@ namespace AllenKRyansCOSC481.Controllers
 
         public AccountController()
         {
+            
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
@@ -79,10 +79,19 @@ namespace AllenKRyansCOSC481.Controllers
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var user = UserManager.FindByEmail(model.Email);
+
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    if (UserManager.IsInRole(user.Id, "Admin"))
+                    {
+                        return RedirectToAction("Index", "Orders");
+                    }
+                    else
+                    {
+                        return RedirectToLocal(returnUrl);
+                    }
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -158,23 +167,23 @@ namespace AllenKRyansCOSC481.Controllers
                 {
                     UserName = model.Email,
                     Email = model.Email,
-                    //FirstName = model.FirstName,
-                    //LastName = model.LastName,
-                    PhoneNumber = model.PhoneNumber
+                    FirstName = model.FirstName,
+                    LastName = model.LastName
                 };
 
-                var result = await UserManager.CreateAsync(user, model.Password);
-                //var role = await UserManager.AddToRoleAsync(user, UserRoles.CUSTOMER.ToString());
-
+                var result = await UserManager.CreateAsync(user, model.Password);              
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    //await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                    //Assign Role to user Here      
+                    await this.UserManager.AddToRoleAsync(user.Id, model.UserRoles);
 
                     return RedirectToAction("Index", "Home");
                 }
