@@ -52,6 +52,11 @@ namespace AllenKRyansCOSC481.Controllers
             if (ModelState.IsValid)
             {
                 db.Orders.Add(order);
+                //db.OrderItems.Add(new OrderItem
+                //{
+                //    OrderId = order.ID,
+                //    // ItemId = Add items
+                //});
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

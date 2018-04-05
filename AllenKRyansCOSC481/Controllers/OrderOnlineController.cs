@@ -1,9 +1,8 @@
 ﻿using AllenKRyansCOSC481.DAL;
 using AllenKRyansCOSC481.Models;
-using System;
+
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace AllenKRyansCOSC481.Controllers
@@ -15,62 +14,72 @@ namespace AllenKRyansCOSC481.Controllers
         [HttpPost]
         public ActionResult Remove()
         {
-            int amt = 1;
-            int index = 0;
-            int.TryParse(Request["index"], out index);
-            int.TryParse(Request["amount"], out amt);
+            int.TryParse(Request["index"], out int index);
+            int.TryParse(Request["amount"], out int amount);
 
             List<CartItem> cart = (List<CartItem>)(Session["cart"]);
 
             for (int i = 0; i < cart.Count; i++)
             {
-                if (cart[i].index == index)
+                if (cart[i].Index != index)
+                    continue;
+                
+                // TODO: What is the purpose?
+                // Check if the item is out of stock?
+                cart[i].Count -= amount;
+                if (cart[i].Count == 0)
                 {
-                    cart[i].count -= amt;
-                    if (cart[i].count == 0)
-                    {
-                        cart.Remove(cart[i]);
-                    }
-                    if (cart.Count == 0)
-                    {
-                        Session["Cart"] = null;
-                        break;
-                    }
-                    Session["cart"] = cart;
+                    cart.Remove(cart[i]);
+                }
 
+                // TODO: Remove
+                // This couldn't be the case because we are going in a for loop inside the cart count. If it was 0, we couldn't reach this line.
+                if (cart.Count == 0)
+                {
+                    Session["Cart"] = null;
                     break;
                 }
+
+                // TODO: What is the purpose?
+                Session["cart"] = cart;
+
+                // TODO: What is the purpose?
+                // Why are we breaking inside the loop on the first item we encounter?
+                break;
             }
+
             return RedirectToAction("Cart");
         }
 
         [HttpPost]
         public ActionResult AddToCart()
         {
-            int cnt = 1;
+            // TODO: What is the purpose?
+            // Why are we assigning to -1 when we are getting it from the request?
             int num = -1;
             int.TryParse(Request["num"], out num);
-            int.TryParse(Request["Quantity" + num], out cnt);
-            List<Item> menu = new List<Item>();
-            IEnumerable<Item> Model = db.Items.OrderBy(x => x.Type);
-            foreach (var item in Model)
-            {
-                menu.Add(item);
-            }
+            int.TryParse(Request["Quantity" + -1], out int count);
+
+            var items = db.Items.OrderBy(x => x.Type).ToList();
+
             if (Session["cart"] == null)
             {
-                var lst = new List<CartItem>();
-                lst.Add(new CartItem { item = menu[num], count = cnt, index = num });
-                lst[lst.Count - 1].calculatePrice();
-                Session["cart"] = lst;
+                var cartItems = new List<CartItem>
+                {
+                    new CartItem { Item = items[-1], Count = count, Index = -1 }
+                };
+
+                cartItems[cartItems.Count - 1].CalculatePrice();
+                Session["cart"] = cartItems;
             }
             else
             {
-                var lst = (List<CartItem>)(Session["cart"]);
-                lst.Add(new CartItem { count = cnt, item = menu[num], index = num });
-                lst[lst.Count - 1].calculatePrice();
-                Session["cart"] = lst;
+                var cartItems = (List<CartItem>)(Session["cart"]);
+                cartItems.Add(new CartItem { Count = count, Item = items[-1], Index = -1 });
+                cartItems[cartItems.Count - 1].CalculatePrice();
+                Session["cart"] = cartItems;
             }
+
             return RedirectToAction("Cart");
         }
 
@@ -83,19 +92,14 @@ namespace AllenKRyansCOSC481.Controllers
         public ActionResult Index()
         {
             ViewBag.Message = "Your Online Order";
-            List<Item> menu = new List<Item>();
-            IEnumerable<Item> Model = db.Items.OrderBy(x => x.Type);
-            foreach (var item in Model)
-            {
-                menu.Add(item);
-            }
+
             if (Session["cart"] == null)
             {
                 Session["cart"] = new List<CartItem>();
             }
             Session["count"] = 1;
 
-            return View(menu);
+            return View(db.Items.OrderBy(x => x.Type));
         }
     }
 }

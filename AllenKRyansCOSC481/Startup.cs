@@ -12,10 +12,10 @@ namespace AllenKRyansCOSC481
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
-            createRolesandUsers();
+            CreateRolesandUsers();
         }
 
-        public void createRolesandUsers()
+        public void CreateRolesandUsers()
         {
             ApplicationDbContext context = new ApplicationDbContext();
 
@@ -26,14 +26,18 @@ namespace AllenKRyansCOSC481
             if (!roleManager.RoleExists("Admin"))
             {
                 //create Admin role   
-                var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
-                role.Name = "Admin";
+                var role = new IdentityRole
+                {
+                    Name = "Admin"
+                };
                 roleManager.Create(role);
 
                 //admin credetials
-                var user = new ApplicationUser();
-                user.UserName = "akronlineordering@gmail.com";
-                user.Email = "akronlineordering@gmail.com";
+                var user = new ApplicationUser
+                {
+                    UserName = "akronlineordering@gmail.com",
+                    Email = "akronlineordering@gmail.com"
+                };
 
                 string userPWD = "akr_password";
 
@@ -50,8 +54,10 @@ namespace AllenKRyansCOSC481
             // creating customer role    
             if (!roleManager.RoleExists("Customer"))
             {
-                var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
-                role.Name = "Customer";
+                var role = new IdentityRole
+                {
+                    Name = "Customer"
+                };
                 roleManager.Create(role);
             }
         }
