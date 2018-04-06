@@ -1,6 +1,6 @@
 ﻿using AllenKRyansCOSC481.DAL;
 using AllenKRyansCOSC481.Models;
-
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -12,41 +12,61 @@ namespace AllenKRyansCOSC481.Controllers
         private RestaurantContext db = new RestaurantContext();
 
         [HttpPost]
+        public ActionResult Order()
+        {
+            List<CartItem> cart = (List<CartItem>)(Session["cart"]);
+
+            var newOrder = new Order
+            {
+                Items = cart.Select(item => item.Item).ToList(),
+                CreatedDate = DateTime.Now,
+                UpdatedDate = DateTime.Now
+            };
+
+            var addedOrder = db.Orders.Add(newOrder);
+            
+            foreach (var addedOrderItem in addedOrder.Items)
+            {
+                var newOrderItem = new OrderItem
+                {
+                    OrderId = addedOrder.ID,
+                    ItemId = addedOrderItem.ID
+                };
+            }
+
+            //db.SaveChanges();
+
+            // Reset the cart and send us back to the view
+            Session["cart"] = new List<CartItem>();
+
+            return RedirectToAction("Cart");
+        }
+
+        [HttpPost]
         public ActionResult Remove()
         {
+            // Get the index of the item in the cart we want to remove
             int.TryParse(Request["index"], out int index);
+            //index--; // Ensure that the index is 0 based
+
+            // Get the amount of items we want to remove from the cart
             int.TryParse(Request["amount"], out int amount);
 
             List<CartItem> cart = (List<CartItem>)(Session["cart"]);
 
-            for (int i = 0; i < cart.Count; i++)
+            // Get the cart item in question
+            var cartItem = cart.Single(item => item.Index == index);
+
+            // Reduce the amount of cart item
+            // If the cart item count is 0, then remove it
+            cartItem.Count -= amount;
+            if (cartItem.Count == 0)
             {
-                if (cart[i].Index != index)
-                    continue;
-                
-                // TODO: What is the purpose?
-                // Check if the item is out of stock?
-                cart[i].Count -= amount;
-                if (cart[i].Count == 0)
-                {
-                    cart.Remove(cart[i]);
-                }
-
-                // TODO: Remove
-                // This couldn't be the case because we are going in a for loop inside the cart count. If it was 0, we couldn't reach this line.
-                if (cart.Count == 0)
-                {
-                    Session["Cart"] = null;
-                    break;
-                }
-
-                // TODO: What is the purpose?
-                Session["cart"] = cart;
-
-                // TODO: What is the purpose?
-                // Why are we breaking inside the loop on the first item we encounter?
-                break;
+                cart.Remove(cartItem);
             }
+
+            // Reset the cart and send us back to the view
+            Session["cart"] = cart;
 
             return RedirectToAction("Cart");
         }
@@ -54,31 +74,32 @@ namespace AllenKRyansCOSC481.Controllers
         [HttpPost]
         public ActionResult AddToCart()
         {
-            // TODO: What is the purpose?
-            // Why are we assigning to -1 when we are getting it from the request?
-            int num = -1;
-            int.TryParse(Request["num"], out num);
-            int.TryParse(Request["Quantity" + -1], out int count);
+            // Get the item index in question, and the count of the item we want to add
+            int.TryParse(Request["itemIndex"], out int itemIndex);
+            int.TryParse(Request["quantity"], out int count);
 
-            var items = db.Items.OrderBy(x => x.Type).ToList();
+            // Get the items from the DB
+            var items = db.Items.ToList();
 
+            var cartItems = new List<CartItem>();
+
+            // If the session is null, make a new one and add an item to it
             if (Session["cart"] == null)
             {
-                var cartItems = new List<CartItem>
+                cartItems = new List<CartItem>
                 {
-                    new CartItem { Item = items[-1], Count = count, Index = -1 }
+                    new CartItem { Item = items[itemIndex], Count = count, Index = itemIndex }
                 };
 
-                cartItems[cartItems.Count - 1].CalculatePrice();
                 Session["cart"] = cartItems;
             }
             else
             {
-                var cartItems = (List<CartItem>)(Session["cart"]);
-                cartItems.Add(new CartItem { Count = count, Item = items[-1], Index = -1 });
-                cartItems[cartItems.Count - 1].CalculatePrice();
-                Session["cart"] = cartItems;
+                cartItems = (List<CartItem>)(Session["cart"]);
+                cartItems.Add(new CartItem { Count = count, Item = items[itemIndex], Index = itemIndex });
             }
+
+            Session["cart"] = cartItems;
 
             return RedirectToAction("Cart");
         }

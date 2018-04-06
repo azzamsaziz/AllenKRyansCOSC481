@@ -20,29 +20,33 @@
 
             <div style="width:100%; height: 110px">
                 <div class="leftCart" style="float: left">
-                    <h4>@cartItem.item.Name</h4>
-                    <p>$ @cartItem.item.Price each</p>
+                    <h4>@cartItem.Item.Name</h4>
+                    <p>$ @cartItem.Item.Price each</p>
                 </div>
                 <div class="rightCart" style="float:right">
-                    <p><label>Amount: </label>@cartItem.count</p>
+                    <p><label>Amount: </label>@cartItem.Count</p>
                     @using (Html.BeginForm("Remove", "OrderOnline", FormMethod.Post))
-                    { 
-                        <input type="number" name="amount" value="1" class="nmbrsz" min="1" max="@cartItem.count"  />
+                    {
+                        <input type="number" name="amount" value="1" class="nmbrsz" min="1" max="@cartItem.Count" />
                         <br />
-                        <input type="hidden" name="index" value="@cartItem.index" />
-                        <input type="submit" name="remove" value="Remove"/>
+                        <input type="hidden" name="index" value="@cartItem.Index" />
+                        <input type="submit" name="remove" value="Remove" />
                     }
-                    
+
                     <br />
-                    <label>$ @cartItem.price</label>
+                    <label>$ @cartItem.Price</label>
                 </div>
             </div>
             <hr />
-            grandTotal += cartItem.price;
+            grandTotal += cartItem.Price;
         }
         <div>
             <p><label>Total: </label> $ @grandTotal</p>
             <button>Order Now!</button>
+            @using (Html.BeginForm("Order", "OrderOnline", FormMethod.Post))
+            {
+                <input type="submit" name="order" value="Order" />
+            }
         </div>
     }
 }
