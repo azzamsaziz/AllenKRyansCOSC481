@@ -105,8 +105,8 @@
             
             using (Html.BeginForm("AddToCart", "OrderOnline", FormMethod.Post))
             {
-                @Html.TextBox("Quantity"+@i, 1, new { @type = "number", min = 1, max = 10, @class="nmbrsz" });
-                <input type="hidden" name="num" value="@i"/>
+                @Html.TextBox("quantity", 1, new { @type = "number", min = 1, max = 10, @class="nmbrsz" });
+                <input type="hidden" name="itemIndex" value="@i"/>
                 <input type="submit" name="AddToCart" value="Add to Cart"/>
             }
             <br />

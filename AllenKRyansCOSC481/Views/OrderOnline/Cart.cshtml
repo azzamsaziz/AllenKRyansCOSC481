@@ -26,13 +26,13 @@
                 <div class="rightCart" style="float:right">
                     <p><label>Amount: </label>@cartItem.Count</p>
                     @using (Html.BeginForm("Remove", "OrderOnline", FormMethod.Post))
-                    { 
-                        <input type="number" name="amount" value="1" class="nmbrsz" min="1" max="@cartItem.Count"  />
+                    {
+                        <input type="number" name="amount" value="1" class="nmbrsz" min="1" max="@cartItem.Count" />
                         <br />
                         <input type="hidden" name="index" value="@cartItem.Index" />
-                        <input type="submit" name="remove" value="Remove"/>
+                        <input type="submit" name="remove" value="Remove" />
                     }
-                    
+
                     <br />
                     <label>$ @cartItem.Price</label>
                 </div>
@@ -43,6 +43,10 @@
         <div>
             <p><label>Total: </label> $ @grandTotal</p>
             <button>Order Now!</button>
+            @using (Html.BeginForm("Order", "OrderOnline", FormMethod.Post))
+            {
+                <input type="submit" name="order" value="Order" />
+            }
         </div>
     }
 }
