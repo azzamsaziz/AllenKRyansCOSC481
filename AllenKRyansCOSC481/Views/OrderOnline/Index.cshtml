@@ -36,9 +36,7 @@
         ItemType old = ItemType.BAD_DATA;
         const string grp = "itemGroup";
         int igrp = 1;
-
-
-
+            
         for (int i = 0; i < items.Count; i++)
         {
             if (old != items[i].Type)
@@ -106,12 +104,11 @@
             using (Html.BeginForm("AddToCart", "OrderOnline", FormMethod.Post))
             {
                 @Html.TextBox("quantity", 1, new { @type = "number", min = 1, max = 10, @class="nmbrsz" });
-                <input type="hidden" name="itemIndex" value="@i"/>
+                <input type="hidden" name="itemId" value="@items[i].ID"/>
                 <input type="submit" name="AddToCart" value="Add to Cart"/>
             }
             <br />
-
-
+            
             @Html.Raw("</div>"); //end item div
 
             start++;
@@ -128,3 +125,4 @@
 </div>
 @Html.Raw("<input type='hidden' id='ocount' name='ocount' value='" + igrp + "'/>")
 <script src="~/Scripts/OrderPage.js"></script>
+<div class="dspacer"></div>
