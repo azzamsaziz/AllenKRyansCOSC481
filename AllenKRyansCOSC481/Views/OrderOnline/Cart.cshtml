@@ -3,52 +3,52 @@
 @{
     ViewBag.Title = "Cart";
 }
-
-<h2>Cart</h2>
-<hr />
-@{
-    if (Session["cart"] == null)
-    {
-        <center><h3>Your cart is empty</h3></center>
-    }
-    else
-    {
-        double grandTotal = 0;
-        List<CartItem> cart = (List<CartItem>)(Session["cart"]);
-        foreach (var cartItem in cart)
+<div class="cartContainer">
+    <h2>Cart</h2>
+    <hr />
+    @{
+        if (Session["cart"] == null)
         {
-
-            <div style="width:100%; height: 110px">
-                <div class="leftCart" style="float: left">
-                    <h4>@cartItem.Item.Name</h4>
-                    <p>$ @cartItem.Item.Price each</p>
-                </div>
-                <div class="rightCart" style="float:right">
-                    <p><label>Amount: </label>@cartItem.Count</p>
-                    @using (Html.BeginForm("Remove", "OrderOnline", FormMethod.Post))
-                    {
-                        <input type="number" name="amount" value="1" class="nmbrsz" min="1" max="@cartItem.Count" />
-                        <br />
-                        <input type="hidden" name="itemId" value="@cartItem.Item.ID" />
-                        <input type="submit" name="remove" value="Remove" />
-                    }
-
-                    <br />
-                    <label>$ @cartItem.Price</label>
-                </div>
-            </div>
-            <hr />
-            grandTotal += cartItem.Price;
+            <center><h3>Your cart is empty</h3></center>
         }
-        <div>
-            <p><label>Total: </label> $ @grandTotal</p>
-            <p><label>Taxes: </label> $ @((grandTotal * 0.06).ToString("0.00"))</p>
-            <p><label>Grand Total: </label> $ @((grandTotal * 1.06).ToString("0.00"))</p>
-            @using (Html.BeginForm("Order", "OrderOnline", FormMethod.Post))
+        else
+        {
+            double grandTotal = 0;
+            List<CartItem> cart = (List<CartItem>)(Session["cart"]);
+            foreach (var cartItem in cart)
             {
-                <input type="submit" name="order" value="Order" />
+
+                <div style="width:100%; height: 110px">
+                    <div class="leftCart" style="float: left">
+                        <h4>@cartItem.Item.Name</h4>
+                        <p>$ @cartItem.Item.Price each</p>
+                    </div>
+                    <div class="rightCart" style="float:right">
+                        <p><label>Amount: </label>@cartItem.Count</p>
+                        @using (Html.BeginForm("Remove", "OrderOnline", FormMethod.Post))
+                        {
+                            <input type="number" name="amount" value="1" class="nmbrsz" min="1" max="@cartItem.Count" />
+                            <br />
+                            <input type="hidden" name="itemId" value="@cartItem.Item.ID" />
+                            <input type="submit" name="remove" value="Remove" />
+                        }
+
+                        <br />
+                        <label>$ @cartItem.Price</label>
+                    </div>
+                </div>
+                <hr />
+                grandTotal += cartItem.Price;
             }
-        </div>
-        <div class="dspacer" />
+            <div>
+                <p><label>Total: </label> $ @grandTotal</p>
+                <p><label>Taxes: </label> $ @((grandTotal * 0.06).ToString("0.00"))</p>
+                <p><label>Grand Total: </label> $ @((grandTotal * 1.06).ToString("0.00"))</p>
+                @using (Html.BeginForm("Order", "OrderOnline", FormMethod.Post))
+                {
+                    <input type="submit" name="order" value="Order" />
+                }
+            </div>
+        }
     }
-}
+</div>
