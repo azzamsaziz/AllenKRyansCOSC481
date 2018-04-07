@@ -41,8 +41,7 @@
             grandTotal += cartItem.Price;
         }
         <div>
-            <p><label>Total: </label> $ @grandTotal</p>
-            <button>Order Now!</button>
+            <p><label>Total: </label> $ @((grandTotal*1.06).ToString().)</p>
             @using (Html.BeginForm("Order", "OrderOnline", FormMethod.Post))
             {
                 <input type="submit" name="order" value="Order" />
