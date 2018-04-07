@@ -29,7 +29,7 @@
                     {
                         <input type="number" name="amount" value="1" class="nmbrsz" min="1" max="@cartItem.Count" />
                         <br />
-                        <input type="hidden" name="index" value="@cartItem.Index" />
+                        <input type="hidden" name="itemId" value="@cartItem.Item.ID" />
                         <input type="submit" name="remove" value="Remove" />
                     }
 
@@ -42,11 +42,13 @@
         }
         <div>
             <p><label>Total: </label> $ @grandTotal</p>
-            <button>Order Now!</button>
+            <p><label>Taxes: </label> $ @((grandTotal * 0.06).ToString("0.00"))</p>
+            <p><label>Grand Total: </label> $ @((grandTotal * 1.06).ToString("0.00"))</p>
             @using (Html.BeginForm("Order", "OrderOnline", FormMethod.Post))
             {
                 <input type="submit" name="order" value="Order" />
             }
         </div>
+        <div class="dspacer" />
     }
 }

@@ -1,10 +1,7 @@
 ﻿using AllenKRyansCOSC481.Models;
-using System;
+
 using System.Collections.Generic;
-using System.Configuration;
 using System.Net.Mail;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace AllenKRyans.Helpers
 {
@@ -31,7 +28,6 @@ namespace AllenKRyans.Helpers
             // get the order info (from controller of the order page -- when send order button is clicked)
             order = new Order() // used for testing
             {
-                Items = new List<Item>(),
                 OrderNote = "This is a note"
             };
 

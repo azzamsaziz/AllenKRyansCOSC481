@@ -14,27 +14,32 @@ namespace AllenKRyansCOSC481.Controllers
         [HttpPost]
         public ActionResult Order()
         {
-            List<CartItem> cart = (List<CartItem>)(Session["cart"]);
+            List<CartItem> cartItems = (List<CartItem>)(Session["cart"]);
 
+            // Add new order
             var newOrder = new Order
             {
-                Items = cart.Select(item => item.Item).ToList(),
                 CreatedDate = DateTime.Now,
                 UpdatedDate = DateTime.Now
             };
+            db.Orders.Add(newOrder);
 
-            var addedOrder = db.Orders.Add(newOrder);
-            
-            foreach (var addedOrderItem in addedOrder.Items)
+            // Add new order items
+            var newOrderItems = new List<OrderItem>();
+            foreach (var cartItem in cartItems)
             {
-                var newOrderItem = new OrderItem
+                for (int i = 0; i < cartItem.Count; i++)
                 {
-                    OrderId = addedOrder.ID,
-                    ItemId = addedOrderItem.ID
-                };
+                    var newOrderItem = new OrderItem
+                    {
+                        OrderId = newOrder.ID,
+                        ItemId = cartItem.Item.ID,
+                    };
+                    newOrderItems.Add(newOrderItem);
+                }
             }
-
-            //db.SaveChanges();
+            db.OrderItems.AddRange(newOrderItems);
+            db.SaveChanges();
 
             // Reset the cart and send us back to the view
             Session["cart"] = new List<CartItem>();
@@ -46,27 +51,30 @@ namespace AllenKRyansCOSC481.Controllers
         public ActionResult Remove()
         {
             // Get the index of the item in the cart we want to remove
-            int.TryParse(Request["index"], out int index);
-            //index--; // Ensure that the index is 0 based
+            Guid.TryParse(Request["itemId"], out Guid itemId);
 
             // Get the amount of items we want to remove from the cart
             int.TryParse(Request["amount"], out int amount);
 
-            List<CartItem> cart = (List<CartItem>)(Session["cart"]);
+            var cartItems = (List<CartItem>)(Session["cart"]);
 
             // Get the cart item in question
-            var cartItem = cart.Single(item => item.Index == index);
+            var cartItem = cartItems.Single(crtItem => crtItem.Item.ID == itemId);
 
             // Reduce the amount of cart item
             // If the cart item count is 0, then remove it
             cartItem.Count -= amount;
             if (cartItem.Count == 0)
             {
-                cart.Remove(cartItem);
+                cartItems.Remove(cartItem);
+            }
+            if (!cartItems.Any()) // To clear the total calculations and the button from the Cart view
+            {
+                cartItems = null;
             }
 
             // Reset the cart and send us back to the view
-            Session["cart"] = cart;
+            Session["cart"] = cartItems;
 
             return RedirectToAction("Cart");
         }
@@ -75,11 +83,11 @@ namespace AllenKRyansCOSC481.Controllers
         public ActionResult AddToCart()
         {
             // Get the item index in question, and the count of the item we want to add
-            int.TryParse(Request["itemIndex"], out int itemIndex);
+            Guid.TryParse(Request["itemId"], out Guid itemId);
             int.TryParse(Request["quantity"], out int count);
 
             // Get the items from the DB
-            var items = db.Items.ToList();
+            var item = db.Items.Single(itemInDb => itemInDb.ID == itemId);
 
             var cartItems = new List<CartItem>();
 
@@ -88,7 +96,7 @@ namespace AllenKRyansCOSC481.Controllers
             {
                 cartItems = new List<CartItem>
                 {
-                    new CartItem { Item = items[itemIndex], Count = count, Index = itemIndex }
+                    new CartItem { Item = item, Count = count }
                 };
 
                 Session["cart"] = cartItems;
@@ -96,7 +104,7 @@ namespace AllenKRyansCOSC481.Controllers
             else
             {
                 cartItems = (List<CartItem>)(Session["cart"]);
-                cartItems.Add(new CartItem { Count = count, Item = items[itemIndex], Index = itemIndex });
+                cartItems.Add(new CartItem { Item = item, Count = count });
             }
 
             Session["cart"] = cartItems;
