@@ -23,28 +23,29 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     @if (Request.IsAuthenticated)
-                    {
-                        if (User.IsInRole("Admin"))
-                        {
-                            <li id="pg6">@Html.ActionLink("Current Orders", "Index", "Orders")</li>
-                        }
-                        else
-                        {
-                            <li id="pg1">@Html.ActionLink("Home", "Index", "Home")</li>
-                            <li id="pg2">@Html.ActionLink("Order Online", "Index", "OrderOnline")</li>
-                            <li id="pg3">@Html.ActionLink("Menu", "Menu", "Home")</li>
-                            <li id="pg4">@Html.ActionLink("About", "About", "Home")</li>
-                            <li id="pg5">@Html.ActionLink("Cart", "Cart", "OrderOnline")</li> <!-- float right? -->
-                        }
-                    }
-                    else
-                    {
-                        <li id="pg1">@Html.ActionLink("Home", "Index", "Home")</li>
-                        <li id="pg2">@Html.ActionLink("Order Online", "Index", "OrderOnline")</li>
-                        <li id="pg3">@Html.ActionLink("Menu", "Menu", "Home")</li>
-                        <li id="pg4">@Html.ActionLink("About", "About", "Home")</li>
-                        <li id="pg5">@Html.ActionLink("Cart", "Cart", "OrderOnline")</li> <!-- float right? -->
-                    }
+    {
+        if (User.IsInRole("Admin"))
+        {
+                <li id="pg6">@Html.ActionLink("Current Orders", "Index", "Orders")</li>
+                <li id="pg">@Html.ActionLink("Menu Items", "Index", "Items")</li>
+}
+else
+{
+                <li id="pg1">@Html.ActionLink("Home", "Index", "Home")</li>
+                <li id="pg2">@Html.ActionLink("Order Online", "Index", "OrderOnline")</li>
+                <li id="pg3">@Html.ActionLink("Menu", "Menu", "Home")</li>
+                <li id="pg4">@Html.ActionLink("About", "About", "Home")</li>
+                <li id="pg5">@Html.ActionLink("Cart", "Cart", "OrderOnline")</li> <!-- float right? -->
+}
+}
+else
+{
+                <li id="pg1">@Html.ActionLink("Home", "Index", "Home")</li>
+                <li id="pg2">@Html.ActionLink("Order Online", "Index", "OrderOnline")</li>
+                <li id="pg3">@Html.ActionLink("Menu", "Menu", "Home")</li>
+                <li id="pg4">@Html.ActionLink("About", "About", "Home")</li>
+                <li id="pg5">@Html.ActionLink("Cart", "Cart", "OrderOnline")</li> <!-- float right? -->
+}
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
