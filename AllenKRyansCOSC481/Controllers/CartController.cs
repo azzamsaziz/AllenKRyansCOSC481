@@ -70,7 +70,7 @@ namespace AllenKRyansCOSC481.Controllers
             // Reset the cart and send us back to the view
             Session["cart"] = null;
 
-            ModelHelper.SendOrderConfirmationEmail(newOrder, UserManager.FindById(User.Identity.GetUserId()));
+            ModelHelper.SendOrderConfirmationEmail(cartItems, newOrder, UserManager.FindById(User.Identity.GetUserId()));
 
             return View("Index");
         }

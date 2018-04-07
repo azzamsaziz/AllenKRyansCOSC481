@@ -54,22 +54,10 @@ namespace AllenKRyansCOSC481.Models
         [DataType(DataType.PhoneNumber)]
         [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
-
-        
-        [DataType(DataType.EmailAddress)]
-        [Display(Name = "Current email")]
-        public string OldEmail { get; set; }
-
-        
-        [DataType(DataType.EmailAddress)]
-        [Display(Name = "New email")]
-        public string NewEmail { get; set; }
-
         
         [DataType(DataType.Password)]
         [Display(Name = "Current password")]
         public string OldPassword { get; set; }
-
         
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]

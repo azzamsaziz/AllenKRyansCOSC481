@@ -247,12 +247,6 @@ namespace AllenKRyansCOSC481.Controllers
 
                 if (!string.IsNullOrWhiteSpace(model.LastName) && !model.LastName.Equals(user.LastName, StringComparison.InvariantCulture))
                     user.LastName = model.LastName;
-
-                if (model.PhoneNumber != null)
-                    user.PhoneNumber = model.PhoneNumber;
-
-                if (model.NewEmail != null && model.OldEmail.Equals(user.Email))
-                    user.EmailConfirmed = true;
                 
                 // update the user information
                 var userResult = await UserManager.UpdateAsync(user);
@@ -263,11 +257,10 @@ namespace AllenKRyansCOSC481.Controllers
                     changePswd = false;
                 }
 
-                var emailResult = await UserManager.SetEmailAsync(user.Id, model.NewEmail);
-                // if unsuccessful, show result and don't allow user to change password
-                if (!emailResult.Succeeded)
+                var phoneResult = await UserManager.SetPhoneNumberAsync(user.Id, model.PhoneNumber);
+                if (!phoneResult.Succeeded)
                 {
-                    AddErrors(emailResult);
+                    AddErrors(phoneResult);
                     changePswd = false;
                 }
 
