@@ -22,7 +22,7 @@ namespace AllenKRyansCOSC481.Controllers
         }
 
         // GET: Items/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(Guid? id)
         {
             if (id == null)
             {
@@ -60,7 +60,7 @@ namespace AllenKRyansCOSC481.Controllers
         }
 
         // GET: Items/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(Guid? id)
         {
             if (id == null)
             {
@@ -91,7 +91,7 @@ namespace AllenKRyansCOSC481.Controllers
         }
 
         // GET: Items/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(Guid? id)
         {
             if (id == null)
             {

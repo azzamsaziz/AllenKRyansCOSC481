@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -19,7 +20,7 @@ namespace AllenKRyansCOSC481.Controllers
         }
 
         // GET: Orders/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(Guid? id)
         {
             if (id == null)
             {
@@ -62,7 +63,7 @@ namespace AllenKRyansCOSC481.Controllers
         }
 
         // GET: Orders/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(Guid? id)
         {
             if (id == null)
             {
@@ -93,7 +94,7 @@ namespace AllenKRyansCOSC481.Controllers
         }
 
         // GET: Orders/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(Guid? id)
         {
             if (id == null)
             {

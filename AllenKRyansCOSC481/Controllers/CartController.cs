@@ -1,9 +1,14 @@
-﻿using AllenKRyansCOSC481.DAL;
+﻿using AllenKRyans.Helpers;
+using AllenKRyansCOSC481.DAL;
 using AllenKRyansCOSC481.Models;
+
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 
 namespace AllenKRyansCOSC481.Controllers
@@ -11,6 +16,19 @@ namespace AllenKRyansCOSC481.Controllers
     public class CartController : Controller
     {
         private RestaurantContext db = new RestaurantContext();
+
+        private ApplicationUserManager _userManager;
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
 
         [HttpPost]
         public ActionResult Order()
@@ -51,6 +69,8 @@ namespace AllenKRyansCOSC481.Controllers
 
             // Reset the cart and send us back to the view
             Session["cart"] = null;
+
+            ModelHelper.SendOrderConfirmationEmail(newOrder, UserManager.FindById(User.Identity.GetUserId()));
 
             return View("Index");
         }
