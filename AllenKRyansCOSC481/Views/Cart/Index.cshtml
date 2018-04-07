@@ -27,7 +27,7 @@
                     </div>
                     <div class="rightCart" style="float:right">
                         <p><label>Amount: </label>@cartItem.Count</p>
-                        @using (Html.BeginForm("Remove", "OrderOnline", FormMethod.Post))
+                        @using (Html.BeginForm("Remove", "Cart", FormMethod.Post))
                         {
                         <input type="number" name="amount" value="1" class="nmbrsz" min="1" max="@cartItem.Count" />
                         <br />
@@ -46,7 +46,7 @@
                     <p><label>Total: </label> $ @grandTotal</p>
                     <p><label>Taxes: </label> $ @((grandTotal * 0.06).ToString("0.00"))</p>
                     <p><label>Grand Total: </label> $ @((grandTotal * 1.06).ToString("0.00"))</p>
-                    @using (Html.BeginForm("Order", "OrderOnline", FormMethod.Post))
+                    @using (Html.BeginForm("Order", "Cart", FormMethod.Post))
                     {
                     <input type="submit" name="order" value="Order" />
                     }
