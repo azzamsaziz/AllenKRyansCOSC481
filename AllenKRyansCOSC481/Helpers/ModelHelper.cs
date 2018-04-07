@@ -61,10 +61,10 @@ namespace AllenKRyans.Helpers
             body2 += user.Email + "\n";
             body2 += user.PhoneNumber + "\n\n";
 
-            for (int i = 0; i < order.Items.Count; i++)
+            for (int i = 0; i < order.CartItems.Count; i++)
             {
-                body += ((i + 1) + ". " + order.Items[i].Name + " - $" + order.Items[i].Price + "\n");
-                body2 += ((i + 1) + ". " + order.Items[i].Name + " - $" + order.Items[i].Price + "\n");
+                body += ((i + 1) + ". " + order.CartItems[i].Item.Name + " - $" + order.CartItems[i].Price + "\n");
+                body2 += ((i + 1) + ". " + order.CartItems[i].Item.Name + " - $" + order.CartItems[i].Price + "\n");
             }
 
             body += "Total price: $" + order.TotalPrice + "\n\n";
