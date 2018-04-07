@@ -27,6 +27,7 @@
                         if (User.IsInRole("Admin"))
                         {
                             <li id="pg6">@Html.ActionLink("Current Orders", "Index", "Orders")</li>
+                            <li id="pg">@Html.ActionLink("Menu Items", "Index", "Items")</li>
                         }
                         else
                         {
@@ -72,6 +73,7 @@
             </div>
         </div>
     </div>
+    <div class="dspacer"></div>
     <footer id="footer">
         <center>
             <p>@DateTime.Now.Year - Developed by team <a href="https://media.giphy.com/media/11p1apCPqM7WEw/giphy.gif">Eagle</a> from EMU</p>

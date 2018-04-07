@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<AllenKRyansCOSC481.Models.Order>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Current Orders";
 }
 
-<h2>Index</h2>
+<h2>Current Orders</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -34,7 +34,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.OrderNote)
         </td>
-        <td>
+        <td style="white-space:nowrap;">
             @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
             @Html.ActionLink("Details", "Details", new { id=item.ID }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.ID })
