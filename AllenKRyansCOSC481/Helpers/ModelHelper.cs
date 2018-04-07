@@ -23,14 +23,10 @@ namespace AllenKRyans.Helpers
         }
 
         // send emails from: akronlineordering, akr_password to:customer,old_akr_email
-        public static void SendOrderConfirmationEmail(List<CartItem> cartItems, Order order, ApplicationUser user)
+        public static void SendOrderConfirmationEmail(List<CartItem> cartItems, ApplicationUser user)
         {
-            // get the order info (from controller of the order page -- when send order button is clicked)
-            order = new Order() // used for testing
-            {
-                OrderNote = "This is a note"
-            };
-
+            
+            // get the order info (from controller of the order page -- when send order button is clicked
             // get the user info
 
             // send 2 emails (1 to customer from admin, 1 to akr email and a separate online ordering akr email)
@@ -74,7 +70,6 @@ namespace AllenKRyans.Helpers
             }
 
             body += "Total price: $" + sum + "\n\n";
-            body += "Order note:\n" + order.OrderNote + "\n\n";
             body += "As always, thanks for your business!\n";
             body += "Allen K. Ryan's";
             message.Body = body;
