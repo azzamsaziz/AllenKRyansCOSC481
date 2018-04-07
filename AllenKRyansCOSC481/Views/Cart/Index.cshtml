@@ -13,8 +13,15 @@
     }
     else
     {
+        if (!string.IsNullOrWhiteSpace(ViewBag?.ErrorMessage))
+        {
+            @*<p style="font-size:20px; color:red">@ViewBag.ErrorMessage Create </p>*@
+            <p style="font-size:20px; color:red">@ViewBag.ErrorMessage Create an account by clicking <a href='@Url.Action("Register", "Account")'>here</a></p>
+        }
         double grandTotal = 0;
-        List<CartItem> cart = (List<CartItem>)(Session["cart"]);
+        List<CartItem>
+            cart = (List<CartItem>
+                )(Session["cart"]);
         foreach (var cartItem in cart)
         {
 
@@ -25,7 +32,7 @@
                 </div>
                 <div class="rightCart" style="float:right">
                     <p><label>Amount: </label>@cartItem.Count</p>
-                    @using (Html.BeginForm("Remove", "OrderOnline", FormMethod.Post))
+                    @using (Html.BeginForm("Remove", "Cart", FormMethod.Post))
                     {
                         <input type="number" name="amount" value="1" class="nmbrsz" min="1" max="@cartItem.Count" />
                         <br />
@@ -44,7 +51,7 @@
             <p><label>Total: </label> $ @grandTotal</p>
             <p><label>Taxes: </label> $ @((grandTotal * 0.06).ToString("0.00"))</p>
             <p><label>Grand Total: </label> $ @((grandTotal * 1.06).ToString("0.00"))</p>
-            @using (Html.BeginForm("Order", "OrderOnline", FormMethod.Post))
+            @using (Html.BeginForm("Order", "Cart", FormMethod.Post))
             {
                 <input type="submit" name="order" value="Order" />
             }

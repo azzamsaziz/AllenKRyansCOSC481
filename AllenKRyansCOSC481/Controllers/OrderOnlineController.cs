@@ -11,73 +11,80 @@ namespace AllenKRyansCOSC481.Controllers
     {
         private RestaurantContext db = new RestaurantContext();
 
-        [HttpPost]
-        public ActionResult Order()
-        {
-            List<CartItem> cartItems = (List<CartItem>)(Session["cart"]);
+        //[HttpPost]
+        //public ActionResult Order()
+        //{
+        //    bool isUserLoggedIn = (System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
+        //    if (!isUserLoggedIn)
+        //    {
+        //        ViewBag.ErrorMessage = "You have to be logged in to make an order.";
+        //        return RedirectToAction("Cart");
+        //    }
 
-            // Add new order
-            var newOrder = new Order
-            {
-                CreatedDate = DateTime.Now,
-                UpdatedDate = DateTime.Now
-            };
-            db.Orders.Add(newOrder);
+        //    List<CartItem> cartItems = (List<CartItem>)(Session["cart"]);
 
-            // Add new order items
-            var newOrderItems = new List<OrderItem>();
-            foreach (var cartItem in cartItems)
-            {
-                for (int i = 0; i < cartItem.Count; i++)
-                {
-                    var newOrderItem = new OrderItem
-                    {
-                        OrderId = newOrder.ID,
-                        ItemId = cartItem.Item.ID,
-                    };
-                    newOrderItems.Add(newOrderItem);
-                }
-            }
-            db.OrderItems.AddRange(newOrderItems);
-            db.SaveChanges();
+        //    // Add new order
+        //    var newOrder = new Order
+        //    {
+        //        CreatedDate = DateTime.Now,
+        //        UpdatedDate = DateTime.Now
+        //    };
+        //    db.Orders.Add(newOrder);
 
-            // Reset the cart and send us back to the view
-            Session["cart"] = new List<CartItem>();
+        //    // Add new order items
+        //    var newOrderItems = new List<OrderItem>();
+        //    foreach (var cartItem in cartItems)
+        //    {
+        //        for (int i = 0; i < cartItem.Count; i++)
+        //        {
+        //            var newOrderItem = new OrderItem
+        //            {
+        //                OrderId = newOrder.ID,
+        //                ItemId = cartItem.Item.ID,
+        //            };
+        //            newOrderItems.Add(newOrderItem);
+        //        }
+        //    }
+        //    db.OrderItems.AddRange(newOrderItems);
+        //    db.SaveChanges();
 
-            return RedirectToAction("Cart");
-        }
+        //    // Reset the cart and send us back to the view
+        //    Session["cart"] = null;
 
-        [HttpPost]
-        public ActionResult Remove()
-        {
-            // Get the index of the item in the cart we want to remove
-            Guid.TryParse(Request["itemId"], out Guid itemId);
+        //    return RedirectToAction("Cart");
+        //}
 
-            // Get the amount of items we want to remove from the cart
-            int.TryParse(Request["amount"], out int amount);
+        //[HttpPost]
+        //public ActionResult Remove()
+        //{
+        //    // Get the index of the item in the cart we want to remove
+        //    Guid.TryParse(Request["itemId"], out Guid itemId);
 
-            var cartItems = (List<CartItem>)(Session["cart"]);
+        //    // Get the amount of items we want to remove from the cart
+        //    int.TryParse(Request["amount"], out int amount);
 
-            // Get the cart item in question
-            var cartItem = cartItems.Single(crtItem => crtItem.Item.ID == itemId);
+        //    var cartItems = (List<CartItem>)(Session["cart"]);
 
-            // Reduce the amount of cart item
-            // If the cart item count is 0, then remove it
-            cartItem.Count -= amount;
-            if (cartItem.Count == 0)
-            {
-                cartItems.Remove(cartItem);
-            }
-            if (!cartItems.Any()) // To clear the total calculations and the button from the Cart view
-            {
-                cartItems = null;
-            }
+        //    // Get the cart item in question
+        //    var cartItem = cartItems.Single(crtItem => crtItem.Item.ID == itemId);
 
-            // Reset the cart and send us back to the view
-            Session["cart"] = cartItems;
+        //    // Reduce the amount of cart item
+        //    // If the cart item count is 0, then remove it
+        //    cartItem.Count -= amount;
+        //    if (cartItem.Count == 0)
+        //    {
+        //        cartItems.Remove(cartItem);
+        //    }
+        //    if (!cartItems.Any()) // To clear the total calculations and the button from the Cart view
+        //    {
+        //        cartItems = null;
+        //    }
 
-            return RedirectToAction("Cart");
-        }
+        //    // Reset the cart and send us back to the view
+        //    Session["cart"] = cartItems;
+
+        //    return RedirectToAction("Cart");
+        //}
 
         [HttpPost]
         public ActionResult AddToCart()
@@ -104,12 +111,21 @@ namespace AllenKRyansCOSC481.Controllers
             else
             {
                 cartItems = (List<CartItem>)(Session["cart"]);
-                cartItems.Add(new CartItem { Item = item, Count = count });
+
+                var cartItem = cartItems.SingleOrDefault(crtItem => crtItem.Item.ID == item.ID);
+                if (cartItem != null)
+                {
+                    cartItem.Count++;
+                }
+                else
+                {
+                    cartItems.Add(new CartItem { Item = item, Count = count });
+                }
             }
 
             Session["cart"] = cartItems;
 
-            return RedirectToAction("Cart");
+            return RedirectToAction("Index", "Cart");
         }
 
         public ActionResult Cart()
