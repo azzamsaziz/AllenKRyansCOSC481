@@ -242,38 +242,50 @@ namespace AllenKRyansCOSC481.Controllers
                 // check if the viewmodels entries are not null
                 // if the entry is null, do nothing
                 // otherwise, update the user info
-                if (model.FirstName != null)
+                if (!string.IsNullOrWhiteSpace(model.FirstName) && !model.FirstName.Equals(user.FirstName, StringComparison.InvariantCulture))
                     user.FirstName = model.FirstName;
 
-                if (model.LastName != null)
+                if (!string.IsNullOrWhiteSpace(model.LastName) && !model.LastName.Equals(user.LastName, StringComparison.InvariantCulture))
                     user.LastName = model.LastName;
 
                 if (model.PhoneNumber != null)
                     user.PhoneNumber = model.PhoneNumber;
 
                 if (model.NewEmail != null && model.OldEmail.Equals(user.Email))
-                    user.Email = model.NewEmail;
-
-                if (model.OldPassword != null && model.NewPassword != null)
-                    user.Email = model.NewEmail;
+                    user.EmailConfirmed = true;
                 
                 // update the user information
-                await UserManager.UpdateAsync(user);
+                var userResult = await UserManager.UpdateAsync(user);
+                var changePswd = true;
+                if (!userResult.Succeeded)
+                {
+                    AddErrors(userResult);
+                    changePswd = false;
+                }
+
+                var emailResult = await UserManager.SetEmailAsync(user.Id, model.NewEmail);
+                // if unsuccessful, show result and don't allow user to change password
+                if (!emailResult.Succeeded)
+                {
+                    AddErrors(emailResult);
+                    changePswd = false;
+                }
+
+                // if we have previous errors, don't change the password
+                if (changePswd)
+                {
+                    var passwordResult = await UserManager.ChangePasswordAsync(user.Id, model.OldPassword, model.NewPassword);
+                    if (passwordResult.Succeeded)
+                    {
+                        return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
+                    }
+                    AddErrors(passwordResult);
+                }
 
                 await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
             }
 
-            /*if (model.OldPassword != null && model.NewPassword != null)
-            {
-                var result = await UserManager.ChangePasswordAsync(user.Id, model.OldPassword, model.NewPassword);
-
-                if (result.Succeeded)
-                {
-                    return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
-                }
-                AddErrors(result);
-            }
-            */
+            
             return View(model);
         }
 
