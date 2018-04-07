@@ -56,9 +56,10 @@ namespace AllenKRyansCOSC481.Controllers
         {
             // TODO: What is the purpose?
             // Why are we assigning to -1 when we are getting it from the request?
-            int num = -1;
-            int.TryParse(Request["num"], out num);
-            int.TryParse(Request["Quantity" + -1], out int count);
+            int index = -1;
+            int count = -1;
+            int.TryParse(Request["num"], out index);
+            int.TryParse(Request["Quantity" + index], out count);
 
             var items = db.Items.OrderBy(x => x.Type).ToList();
 
@@ -66,7 +67,7 @@ namespace AllenKRyansCOSC481.Controllers
             {
                 var cartItems = new List<CartItem>
                 {
-                    new CartItem { Item = items[-1], Count = count, Index = -1 }
+                    new CartItem { Item = items[index], Count = count, Index = index }
                 };
 
                 cartItems[cartItems.Count - 1].CalculatePrice();
@@ -75,7 +76,7 @@ namespace AllenKRyansCOSC481.Controllers
             else
             {
                 var cartItems = (List<CartItem>)(Session["cart"]);
-                cartItems.Add(new CartItem { Count = count, Item = items[-1], Index = -1 });
+                cartItems.Add(new CartItem { Count = count, Item = items[index], Index = index });
                 cartItems[cartItems.Count - 1].CalculatePrice();
                 Session["cart"] = cartItems;
             }
