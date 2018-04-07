@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace AllenKRyansCOSC481.Models
 {
@@ -21,7 +22,7 @@ namespace AllenKRyansCOSC481.Models
     public class Item
     {
         [Key]
-        public int ID { get; set; }
+        public Guid ID { get; set; } = Guid.NewGuid();
         public double Price { get; set; }
         public ItemType Type { get; set; }
         public string Name { get; set; } = string.Empty;
