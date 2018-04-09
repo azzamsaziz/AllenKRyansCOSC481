@@ -41,16 +41,16 @@
                 </div>
                 <hr />
                 grandTotal += cartItem.Price;
-            }
-            <div>
-                <p><label>Total: </label> $ @grandTotal</p>
-                <p><label>Taxes: </label> $ @((grandTotal * 0.06).ToString("0.00"))</p>
-                <p><label>Grand Total: </label> $ @((grandTotal * 1.06).ToString("0.00"))</p>
-                @using (Html.BeginForm("Order", "Cart", FormMethod.Post))
-                {
-                    <input type="submit" name="order" value="Order" />
                 }
-            </div>
-        }
-    }
+                <div>
+                    <p><label>Total: </label> $ @grandTotal</p>
+                    <p><label>Taxes: </label> $ @((grandTotal * 0.06).ToString("0.00"))</p>
+                    <p><label>Grand Total: </label> $ @((grandTotal * 1.06).ToString("0.00"))</p>
+                    @using (Html.BeginForm("Order", "Cart", FormMethod.Post))
+                    {
+                    <input type="submit" name="order" value="Order" />
+                    }
+                </div>
+                }
+                }
 </div>

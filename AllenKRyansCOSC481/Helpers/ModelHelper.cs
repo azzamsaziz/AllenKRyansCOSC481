@@ -23,14 +23,10 @@ namespace AllenKRyans.Helpers
         }
 
         // send emails from: akronlineordering, akr_password to:customer,old_akr_email
-        public static void SendOrderConfirmationEmail(Order order, ApplicationUser user)
+        public static void SendOrderConfirmationEmail(List<CartItem> cartItems, ApplicationUser user)
         {
-            // get the order info (from controller of the order page -- when send order button is clicked)
-            order = new Order() // used for testing
-            {
-                OrderNote = "This is a note"
-            };
-
+            
+            // get the order info (from controller of the order page -- when send order button is clicked
             // get the user info
 
             // send 2 emails (1 to customer from admin, 1 to akr email and a separate online ordering akr email)
@@ -48,32 +44,37 @@ namespace AllenKRyans.Helpers
             {
                 // to, from, and subject of email
                 From = akrEmail,
-                Subject = "Online Order from " /*+ user.FirstName*/ + " " /*+ user.LastName*/
+                Subject = "Online Order from " + user.FirstName + " " + user.LastName
             };
 
             message.To.Add(userEmail.Address);
             message2.To.Add("mmccoll1996@gmail.com"); // replace with allenkryans3@gmail.com when demoing to ron
 
             // building the bodies of the emails
-            string body = /*user.FirstName +*/ ":\n\n";
+            string body = user.FirstName + ":\n\n";
             string body2 = "Customer Information:\n";
-            body2 += /*user.FirstName +*/ " " + /*user.LastName +*/ "\n";
+            body2 += user.FirstName + " " + user.LastName + "\n";
             body2 += user.Email + "\n";
             body2 += user.PhoneNumber + "\n\n";
 
-            for (int i = 0; i < order.CartItems.Count; i++)
+            for (int i = 0; i < cartItems.Count; i++)
             {
-                body += ((i + 1) + ". " + order.CartItems[i].Item.Name + " - $" + order.CartItems[i].Price + "\n");
-                body2 += ((i + 1) + ". " + order.CartItems[i].Item.Name + " - $" + order.CartItems[i].Price + "\n");
+                body += ((i + 1) + ". " + cartItems[i].Item.Name + " - $" + cartItems[i].Price + "\n");
+                body2 += ((i + 1) + ". " + cartItems[i].Item.Name + " - $" + cartItems[i].Price + "\n");
             }
 
-            body += "Total price: $" + order.TotalPrice + "\n\n";
-            body += "Order note:\n" + order.OrderNote + "\n\n";
+            double sum = 0;
+            foreach (var item in cartItems)
+            {
+                sum += item.Price;
+            }
+
+            body += "Total price: $" + sum + "\n\n";
             body += "As always, thanks for your business!\n";
             body += "Allen K. Ryan's";
             message.Body = body;
 
-            body2 += "Total price: $" + order.TotalPrice + "\n\n";
+            body2 += "Total price: $" + sum + "\n\n";
             message2.Body = body2;
 
             // connect and authenticate

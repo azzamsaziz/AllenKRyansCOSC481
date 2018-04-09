@@ -27,14 +27,43 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.OrderNote)
+            @Html.DisplayNameFor(model => model.TotalPrice)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.OrderNote)
+            @String.Format("{0:c}", Model.TotalPrice)
         </dd>
-
     </dl>
+
+    <table class="table">
+        
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Price
+        </th>
+        <th>
+            Quantity
+        </th>
+    </tr>
+
+    @foreach (var item in Model.CartItems)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Count)
+            </td>
+        </tr>
+    }
+    </table>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
