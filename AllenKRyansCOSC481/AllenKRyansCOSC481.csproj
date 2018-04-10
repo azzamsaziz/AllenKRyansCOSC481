@@ -301,6 +301,7 @@
     <Content Include="Views\Home\Menu.cshtml" />
     <Content Include="Views\OrderOnline\Index.cshtml" />
     <Content Include="Views\Manage\ViewPreviousOrders.cshtml" />
+    <Content Include="Views\Manage\CheckAccountInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
