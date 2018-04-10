@@ -2,15 +2,17 @@
 @model IEnumerable<AllenKRyansCOSC481.Models.Item>
 @{
     ViewBag.Title = "Cart";
+    
 }
 <div class="cartContainer">
     <h2>Cart</h2>
-    <hr />
+
     @{
         var cart = Session["cart"] as List<CartItem>;
         // If the cart is null then let the user know that the cart is empty
         if (cart == null || !cart.Any())
         {
+            <hr />
             <center><h3>Your cart is empty</h3></center>
         }
         else // Otherwise show the items within the cart and their prices
