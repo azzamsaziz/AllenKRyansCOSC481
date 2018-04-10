@@ -20,17 +20,20 @@ namespace AllenKRyansCOSC481.Controllers
         }
 
         // GET: Orders/Details/5
+        // Get details on the order item within the DB
         public ActionResult Details(Guid? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Order order = db.Orders.Find(id);
             if (order == null)
             {
                 return HttpNotFound();
             }
+
             return View(order);
         }
 
@@ -63,17 +66,20 @@ namespace AllenKRyansCOSC481.Controllers
         }
 
         // GET: Orders/Edit/5
+        // Edit an order within the DB
         public ActionResult Edit(Guid? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Order order = db.Orders.Find(id);
             if (order == null)
             {
                 return HttpNotFound();
             }
+
             return View(order);
         }
 
@@ -94,6 +100,7 @@ namespace AllenKRyansCOSC481.Controllers
         }
 
         // GET: Orders/Delete/5
+        // Delete an order from the DB
         public ActionResult Delete(Guid? id)
         {
             if (id == null)

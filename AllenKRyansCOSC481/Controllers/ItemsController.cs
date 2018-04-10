@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
+
 using AllenKRyansCOSC481.DAL;
 using AllenKRyansCOSC481.Models;
 
@@ -13,26 +11,31 @@ namespace AllenKRyansCOSC481.Controllers
 {
     public class ItemsController : Controller
     {
-        private RestaurantContext db = new RestaurantContext();
+        // The restaurant DB
+        private RestaurantContext restaurantDb = new RestaurantContext();
 
         // GET: Items
+        // Return the view to the user. This is mostly the admin
         public ActionResult Index()
         {
-            return View(db.Items.ToList());
+            return View(restaurantDb.Items.ToList());
         }
 
         // GET: Items/Details/5
+        // Show the details of the items within the DB
         public ActionResult Details(Guid? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Item item = db.Items.Find(id);
+
+            Item item = restaurantDb.Items.Find(id);
             if (item == null)
             {
                 return HttpNotFound();
             }
+
             return View(item);
         }
 
@@ -51,8 +54,8 @@ namespace AllenKRyansCOSC481.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Items.Add(item);
-                db.SaveChanges();
+                restaurantDb.Items.Add(item);
+                restaurantDb.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -60,17 +63,20 @@ namespace AllenKRyansCOSC481.Controllers
         }
 
         // GET: Items/Edit/5
+        // Edit the item within the DB
         public ActionResult Edit(Guid? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Item item = db.Items.Find(id);
+
+            Item item = restaurantDb.Items.Find(id);
             if (item == null)
             {
                 return HttpNotFound();
             }
+
             return View(item);
         }
 
@@ -83,25 +89,28 @@ namespace AllenKRyansCOSC481.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(item).State = EntityState.Modified;
-                db.SaveChanges();
+                restaurantDb.Entry(item).State = EntityState.Modified;
+                restaurantDb.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(item);
         }
 
         // GET: Items/Delete/5
+        // Delete an item from the DB
         public ActionResult Delete(Guid? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Item item = db.Items.Find(id);
+
+            Item item = restaurantDb.Items.Find(id);
             if (item == null)
             {
                 return HttpNotFound();
             }
+
             return View(item);
         }
 
@@ -110,9 +119,9 @@ namespace AllenKRyansCOSC481.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Item item = db.Items.Find(id);
-            db.Items.Remove(item);
-            db.SaveChanges();
+            Item item = restaurantDb.Items.Find(id);
+            restaurantDb.Items.Remove(item);
+            restaurantDb.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -120,7 +129,7 @@ namespace AllenKRyansCOSC481.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                restaurantDb.Dispose();
             }
             base.Dispose(disposing);
         }

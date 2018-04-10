@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using AllenKRyansCOSC481.DAL;
-using AllenKRyansCOSC481.Models;
+﻿using System.Web.Mvc;
 
 namespace AllenKRyansCOSC481.Controllers
 {
     public class HomeController : Controller
     {
-        
-
         public ActionResult Index()
         {
             return View();

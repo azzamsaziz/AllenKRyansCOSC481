@@ -3,19 +3,20 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Collections.Generic;
+
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+
 using AllenKRyansCOSC481.Models;
-using System.Collections.Generic;
-using AllenKRyansCOSC481.DAL;
 
 namespace AllenKRyansCOSC481.Controllers
 {
     [Authorize]
     public class ManageController : Controller
     {
-        //private RestaurantContext db = new RestaurantContext();
+        // Properties for sign in and user manager
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -29,6 +30,7 @@ namespace AllenKRyansCOSC481.Controllers
             SignInManager = signInManager;
         }
 
+        // Lazy load the sign in manager
         public ApplicationSignInManager SignInManager
         {
             get
@@ -41,6 +43,7 @@ namespace AllenKRyansCOSC481.Controllers
             }
         }
 
+        // Lazy load the user manager property
         public ApplicationUserManager UserManager
         {
             get
@@ -53,10 +56,11 @@ namespace AllenKRyansCOSC481.Controllers
             }
         }
 
-        //
         // GET: /Manage/Index
+        // Show the index page for the user. Show any errors that may have happened when the user tries to make an account or login
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
+            // Initialize the status messages based on what errors showed up
             ViewBag.StatusMessage =
                 message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
                 : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
@@ -68,6 +72,7 @@ namespace AllenKRyansCOSC481.Controllers
 
             var userId = User.Identity.GetUserId();
 
+            // Initialize the model
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),
@@ -80,12 +85,13 @@ namespace AllenKRyansCOSC481.Controllers
             return View(model);
         }
 
-        //
         // POST: /Manage/RemoveLogin
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> RemoveLogin(string loginProvider, string providerKey)
         {
+            // If the result of login removal is successful then we find the user and we sign them in
+            // Otherwise show an error to the user
             ManageMessageId? message;
             var result = await UserManager.RemoveLoginAsync(User.Identity.GetUserId(), new UserLoginInfo(loginProvider, providerKey));
             if (result.Succeeded)
@@ -104,19 +110,18 @@ namespace AllenKRyansCOSC481.Controllers
             return RedirectToAction("ManageLogins", new { Message = message });
         }
 
-        //
         // GET: /Manage/AddPhoneNumber
         public ActionResult AddPhoneNumber()
         {
             return View();
         }
 
-        //
         // POST: /Manage/AddPhoneNumber
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> AddPhoneNumber(AddPhoneNumberViewModel model)
         {
+            // If the model state is not valid return the model as is
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -184,9 +189,11 @@ namespace AllenKRyansCOSC481.Controllers
             {
                 return View(model);
             }
+            // Change the phone number if the model is valid
             var result = await UserManager.ChangePhoneNumberAsync(User.Identity.GetUserId(), model.PhoneNumber, model.Code);
             if (result.Succeeded)
             {
+                // Find the user and sign in
                 var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
                 if (user != null)
                 {
@@ -205,6 +212,8 @@ namespace AllenKRyansCOSC481.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> RemovePhoneNumber()
         {
+            // Send a request to remove the phone number
+            // If successful then sign in the user again. Otherwise, return the user to the page
             var result = await UserManager.SetPhoneNumberAsync(User.Identity.GetUserId(), null);
             if (!result.Succeeded)
             {
@@ -225,8 +234,8 @@ namespace AllenKRyansCOSC481.Controllers
             return View();
         }
 
-        //
         // POST: /Manage/ChangeAccountInfo
+        // Here we allow the user to change account information
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ChangeAccountInfo(ChangeAccountInfoViewModel model)
@@ -236,6 +245,7 @@ namespace AllenKRyansCOSC481.Controllers
                 return View(model);
             }
 
+            // Find the user ID
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
             if (user != null)
             {
@@ -247,7 +257,7 @@ namespace AllenKRyansCOSC481.Controllers
 
                 if (!string.IsNullOrWhiteSpace(model.LastName) && !model.LastName.Equals(user.LastName, StringComparison.InvariantCulture))
                     user.LastName = model.LastName;
-                
+
                 // update the user information
                 var userResult = await UserManager.UpdateAsync(user);
                 var changePswd = true;
@@ -278,7 +288,7 @@ namespace AllenKRyansCOSC481.Controllers
                 await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
             }
 
-            
+
             return View(model);
         }
 
@@ -301,7 +311,7 @@ namespace AllenKRyansCOSC481.Controllers
         [HttpPost]
         public ActionResult ViewPreviousOrders()
         {
-            
+
             return View();
         }
 
