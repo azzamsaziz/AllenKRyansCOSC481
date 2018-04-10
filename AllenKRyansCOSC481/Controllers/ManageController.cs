@@ -293,6 +293,32 @@ namespace AllenKRyansCOSC481.Controllers
         }
 
         //
+        // GET: /Manage/ChangeAccountInfo
+        public ActionResult CheckAccountInfo(string email)
+        {
+            var user = UserManager.FindByEmail(email);
+
+            CheckAccountInfoViewModel model = new CheckAccountInfoViewModel
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber
+            };
+
+            return View(model);
+        }
+
+        // POST: /Manage/ChangeAccountInfo
+        // Here we allow the user to change account information
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> CheckAccountInfo()
+        {      
+            return View();
+        }
+
+        //
         // GET: /Manage/ViewPreviousOrders
         public ActionResult ViewPreviousOrders(string email)
         {

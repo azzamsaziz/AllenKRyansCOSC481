@@ -16,6 +16,11 @@
             {
                 @Html.ActionLink("Edit", "ChangeAccountInfo")
             }
+            |
+            @if (Model.HasPassword)
+            {
+                @Html.ActionLink("View", "CheckAccountInfo", new { email = Model.Email })
+            }
             ]
         </dd>
     </dl>
