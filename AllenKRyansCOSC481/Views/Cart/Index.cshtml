@@ -2,21 +2,27 @@
 @model IEnumerable<AllenKRyansCOSC481.Models.Item>
 @{
     ViewBag.Title = "Cart";
+    
 }
 <div class="cartContainer">
     <h2>Cart</h2>
-    <hr />
+
     @{
         // If the cart is null then let the user know that the cart is empty
         if (Session["cart"] == null)
         {
+            <hr />
             <center><h3>Your cart is empty</h3></center>
         }
         else // Otherwise show the items within the cart and their prices
         {
+            if (ViewBag.ErrorMessage != null)
+            {
+                <center><h3 style="color:red;">@ViewBag.ErrorMessage</h3></center>
+            }
             // Get the cart property
             var cart = (List<CartItem>)(Session["cart"]);
-
+            <hr />
             // Go over each item within the cart and display the information within it
             foreach (var cartItem in cart)
             {
