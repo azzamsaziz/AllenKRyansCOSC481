@@ -1,4 +1,5 @@
 ﻿@using AllenKRyansCOSC481.Models;
+
 @model IEnumerable<AllenKRyansCOSC481.Models.Item>
 @{
     ViewBag.Title = "OrderOnline";
@@ -11,16 +12,21 @@
         <!-- needs a class -->
         <div class="">
             <ul class="nav navbar-nav navcent">
-                <li><a class="hoverable" id="grp1" onclick="visibility(1)">Party Packs</a></li>
-                <li><a class="hoverable" id="grp2" onclick="visibility(2)">Buckets</a></li>
-                <li><a class="hoverable" id="grp3" onclick="visibility(3)">Chicken</a></li>
-                <li><a class="hoverable" id="grp4" onclick="visibility(4)">Ribs</a></li>
-                <li><a class="hoverable" id="grp5" onclick="visibility(5)">Mixed Chicken</a></li>
-                <li><a class="hoverable" id="grp6" onclick="visibility(6)">Appetizers</a></li>
-                <li><a class="hoverable" id="grp8" onclick="visibility(8)">Sandwiches</a></li>
-                <li><a class="hoverable" id="grp9" onclick="visibility(9)">Chicken & Ribs</a></li>
-                <li><a class="hoverable" id="grp10" onclick="visibility(10)">Combinations</a></li>
-                <li><a class="hoverable" id="grp11" onclick="visibility(11)">Other</a></li>
+                @{
+                    // Get the item types from the DB
+                    List<Item> items = new List<Item>(Model);
+
+                    // Get all the unique item types
+                    var itemTypes = items?.Select(item => item.Type)?.Distinct()?.ToList() ?? new List<ItemType>();
+                    var itemDescriptions = new List<string>();
+
+                    // Print each of the item types
+                    for (int itemTypeIndex = 0; itemTypeIndex < itemTypes.Count; itemTypeIndex++)
+                    {
+                        // Print the enum descriptions
+                        @Html.Raw($"<li><a class=\"hoverable\" id=\"grp{itemTypeIndex + 1}\" onclick=\"visibility({itemTypeIndex + 1})\">{itemTypes[itemTypeIndex].GetDescription()}</a></li>");
+                    }
+                }
             </ul>
         </div>
     </div>
@@ -30,23 +36,27 @@
     <!-- to be replaced with automated divs formed from DB -->
 
     @{
-        List<Item> items = new List<Item>(Model);
-
+        // Initialize the variables
         int start = 0;
         ItemType old = ItemType.BAD_DATA;
         const string grp = "itemGroup";
         int igrp = 1;
-            
+
+        // Go over each item and print it
         for (int i = 0; i < items.Count; i++)
         {
+            // Each time we change a type then we print it under a different grouping
             if (old != items[i].Type)
             {
+                // We reset the type
                 old = items[i].Type;
 
+                // If it is 0 then create the div
                 if (i == 0)
                 {
                     @Html.Raw("<div id='" + grp + igrp + "'>"); //open first item group
                 }
+                // Otherwise end it
                 else
                 {
                     start = 0;
@@ -55,44 +65,8 @@
                     @Html.Raw("<div id='" + grp + igrp + "' style='display: none;'>"); //open not first item group
                 }
                 igrp++;
-                /*  SWITCH FOR HEADER TAG OF THE ITEM DIV */
-                switch (items[i].Type)
-                {
-                    case ItemType.PARTY_PACK:
-                        @Html.Raw("<h1>Party Packs</h1>");
-                        break;
-                    case ItemType.APPETIZER_SIDE:
-                        @Html.Raw("<h1>Appetizers</h1>");
-                        break;
-                    case ItemType.BUCKET:
-                        @Html.Raw("<h1>Buckets</h1>");
-                        break;
-                    case ItemType.CHICKEN_ALONE:
-                        @Html.Raw("<h1>Chicken</h1>");
-                        break;
-                    case ItemType.CHICKEN_RIBS:
-                        @Html.Raw("<h1>Chicken and Ribs</h1>");
-                        break;
-                    case ItemType.COMBO:
-                        @Html.Raw("<h1>Combinations</h1>");
-                        break;
-                    case ItemType.MIXED_CHICKEN:
-                        @Html.Raw("<h1>Mixed Chicken</h1>");
-                        break;
-                    case ItemType.RIBS_ALONE:
-                        @Html.Raw("<h1>Ribs</h1>");
-                        break;
-                    case ItemType.SALAD:
-                        @Html.Raw("<h1>Salad</h1>");
-                        break;
-                    case ItemType.SANDWICH_BURGER:
-                        @Html.Raw("<h1>Sandwiches and Burgers</h1>");
-                        break;
-                    case ItemType.OTHER:
-                        @Html.Raw("<h1>Other</h1>");
-                        break;
-                }
-                /*  END OF SWITCH */
+                // Print out the item type
+                @Html.Raw($"<h1>{items[i].Type.GetDescription()}</h1>")
                 @Html.Raw("<div class='row'>"); //begin first row div
             }
 
@@ -100,15 +74,16 @@
             @Html.Raw("<h3>" + items[i].Name + "</h3>");
             @Html.Raw("<p style='text-align: justify;'>" + items[i].Description + "</p>");
             @Html.Raw("<p>$" + items[i].Price.ToString("0.00") + "</p>");
-            
+
+            // Post method to adding an item into a cart
             using (Html.BeginForm("AddToCart", "OrderOnline", FormMethod.Post))
             {
-                @Html.TextBox("quantity", 1, new { @type = "number", min = 1, max = 10, @class="nmbrsz" });
-                <input type="hidden" name="itemId" value="@items[i].ID"/>
-                <input type="submit" name="AddToCart" value="Add to Cart"/>
+                @Html.TextBox("quantity", 1, new { @type = "number", min = 1, max = 10, @class = "nmbrsz" });
+                <input type="hidden" name="itemId" value="@items[i].ID" />
+                <input type="submit" name="AddToCart" value="Add to Cart" />
             }
             <br />
-            
+
             @Html.Raw("</div>"); //end item div
 
             start++;
