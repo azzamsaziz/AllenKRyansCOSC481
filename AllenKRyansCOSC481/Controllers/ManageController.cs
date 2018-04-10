@@ -62,7 +62,7 @@ namespace AllenKRyansCOSC481.Controllers
         {
             // Initialize the status messages based on what errors showed up
             ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
+                message == ManageMessageId.ChangePasswordSuccess ? "Your account information has been changed."
                 : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
                 : message == ManageMessageId.SetTwoFactorSuccess ? "Your two-factor authentication provider has been set."
                 : message == ManageMessageId.Error ? "An error has occurred."
