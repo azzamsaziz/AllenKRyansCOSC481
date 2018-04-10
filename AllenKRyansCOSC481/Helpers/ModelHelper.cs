@@ -7,21 +7,6 @@ namespace AllenKRyans.Helpers
 {
     public static class ModelHelper
     {
-        public static List<Order> GetOrders()
-        {
-            return new List<Order>();
-        }
-
-        public static List<Item> GetItems()
-        {
-            return new List<Item>();
-        }
-
-        public static List<ApplicationUser> GetUsers()
-        {
-            return new List<ApplicationUser>();
-        }
-
         // send emails from: akronlineordering, akr_password to:customer,old_akr_email
         public static void SendOrderConfirmationEmail(List<CartItem> cartItems, ApplicationUser user)
         {

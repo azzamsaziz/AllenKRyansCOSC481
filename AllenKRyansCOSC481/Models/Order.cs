@@ -17,6 +17,7 @@ namespace AllenKRyansCOSC481.Models
         public DateTime UpdatedDate { get; set; }
         public string OrderNote { get; set; } = string.Empty;
 
+        // Get all the items relevant to the order
         [NotMapped]
         private List<Item> Items
         {
@@ -26,14 +27,19 @@ namespace AllenKRyansCOSC481.Models
             }
         }
 
+        // Make cart item objects that are relevant to the order
+        // This enables us to view the orders with their count without any redundant items
         [NotMapped]
         public List<CartItem> CartItems
         {
             get
             {
+                // Get the items that are relevant to the order
                 var cartItems = new List<CartItem>();
                 var items = GetRelevantItems(ID).ToList();
 
+                // Group the items by their ID. So if an order is there 6 times, it will be grouped all at once
+                // We then get the count of the group and we know how many of that item was ordered
                 var groupedItems = items.GroupBy(item => item.ID);
                 foreach (var groupedItem in groupedItems)
                 {

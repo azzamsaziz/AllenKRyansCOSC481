@@ -1,24 +1,25 @@
 ﻿@using AllenKRyansCOSC481.Models;
 @model IEnumerable<AllenKRyansCOSC481.Models.Item>
-    @{
+@{
     ViewBag.Title = "Cart";
-    }
-    <div class="cartContainer">
-        <h2>Cart</h2>
-        <hr />
-        @{
+}
+<div class="cartContainer">
+    <h2>Cart</h2>
+    <hr />
+    @{
+        // If the cart is null then let the user know that the cart is empty
         if (Session["cart"] == null)
         {
-        <center><h3>Your cart is empty</h3></center>
+            <center><h3>Your cart is empty</h3></center>
         }
-        else
+        else // Otherwise show the items within the cart and their prices
         {
-        double grandTotal = 0;
-        List<CartItem>
-            cart = (List<CartItem>
-                )(Session["cart"]);
-                foreach (var cartItem in cart)
-                {
+            // Get the cart property
+            var cart = (List<CartItem>)(Session["cart"]);
+
+            // Go over each item within the cart and display the information within it
+            foreach (var cartItem in cart)
+            {
 
                 <div style="width:100%; height: 110px">
                     <div class="leftCart" style="float: left">
@@ -29,28 +30,31 @@
                         <p><label>Amount: </label>@cartItem.Count</p>
                         @using (Html.BeginForm("Remove", "Cart", FormMethod.Post))
                         {
-                        <input type="number" name="amount" value="1" class="nmbrsz" min="1" max="@cartItem.Count" />
-                        <br />
-                        <input type="hidden" name="itemId" value="@cartItem.Item.ID" />
-                        <input type="submit" name="remove" value="Remove" />
+                            <input type="number" name="amount" value="1" class="nmbrsz" min="1" max="@cartItem.Count" />
+                            <br />
+                            <input type="hidden" name="itemId" value="@cartItem.Item.ID" />
+                            <input type="submit" name="remove" value="Remove" />
                         }
-
                         <br />
-                        <label>$ @cartItem.Price</label>
+                        @*Show the string with two decimal points*@
+                        <label>$ @cartItem.Price.ToString("0.00")</label>
                     </div>
                 </div>
                 <hr />
-                grandTotal += cartItem.Price;
-                }
-                <div>
-                    <p><label>Total: </label> $ @grandTotal</p>
-                    <p><label>Taxes: </label> $ @((grandTotal * 0.06).ToString("0.00"))</p>
-                    <p><label>Grand Total: </label> $ @((grandTotal * 1.06).ToString("0.00"))</p>
-                    @using (Html.BeginForm("Order", "Cart", FormMethod.Post))
-                    {
+            }
+            <div>
+                @*Get the sum of the cart. Show the total, taxes, and grand total.*@
+                @{var cartPriceSum = cart?.Sum(cartItem => cartItem?.Price) ?? 0;}
+                <p><label>Total: </label> $ @cartPriceSum.ToString("0.00")</p>
+                <p><label>Taxes: </label> $ @((cartPriceSum * 0.06).ToString("0.00"))</p>
+                <p><label>Grand Total: </label> $ @((cartPriceSum * 1.06).ToString("0.00"))</p>
+
+                @*Publish a post to make the order*@
+                @using (Html.BeginForm("Order", "Cart", FormMethod.Post))
+                {
                     <input type="submit" name="order" value="Order" />
-                    }
-                </div>
                 }
-                }
+            </div>
+        }
+    }
 </div>

@@ -38,6 +38,7 @@ namespace AllenKRyansCOSC481.Models
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
 
+        // Get all the orders in the DB
         private IEnumerable<Order> GetOrders()
         {
             IEnumerable<Order> orders;
@@ -48,6 +49,7 @@ namespace AllenKRyansCOSC481.Models
             return orders;
         }
 
+        // Add the custom property of finding the active orders
         public IEnumerable<Order> ActiveOrders
         {
             get
@@ -56,6 +58,7 @@ namespace AllenKRyansCOSC481.Models
             }
         }
 
+        // Add the custom property of finding the previous orders
         public IEnumerable<Order> PreviousOrders
         {
             get

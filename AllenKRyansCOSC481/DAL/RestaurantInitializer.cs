@@ -7,6 +7,8 @@ namespace AllenKRyansCOSC481.DAL
 {
     public class RestaurantInitializer : DropCreateDatabaseAlways<RestaurantContext>
     {
+        // Drop create the table when the application is launched
+        // Over ride the seed method to create the initial data when the app is launched
         protected override void Seed(RestaurantContext context)
         {
             var items = new List<Item>
@@ -142,7 +144,8 @@ namespace AllenKRyansCOSC481.DAL
                 new Item{ Name = "Chicken and Shrimp (Large Combo)", Price = 15.49, Type = ItemType.COMBO, Description = "2 piece chicken, 6 piece shrimp." },  
                 new Item{ Name = "Triple Play", Price = 16.99, Type = ItemType.COMBO, Description = "2 pieces of chicken, three shrimp and 3 bones of barbeque ribs." }
             };
-
+            
+            // Add all the items to the DB and then save the changes
             items.ForEach(s => context.Items.Add(s));
             context.SaveChanges();
         }
