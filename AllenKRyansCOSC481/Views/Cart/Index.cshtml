@@ -7,15 +7,20 @@
     <h2>Cart</h2>
     <hr />
     @{
+        var cart = Session["cart"] as List<CartItem>;
         // If the cart is null then let the user know that the cart is empty
-        if (Session["cart"] == null)
+        if (cart == null || !cart.Any())
         {
             <center><h3>Your cart is empty</h3></center>
         }
         else // Otherwise show the items within the cart and their prices
         {
-            // Get the cart property
-            var cart = (List<CartItem>)(Session["cart"]);
+            // If the error is there, display it
+            if (!string.IsNullOrWhiteSpace(ViewBag?.ErrorMessage))
+            {
+                @*<p style="font-size:20px; color:red">@ViewBag.ErrorMessage Create </p>*@
+                <p style="font-size:20px; color:red">@ViewBag.ErrorMessage Create an account by clicking <a href='@Url.Action("Register", "Account")'>here</a></p>
+            }
 
             // Go over each item within the cart and display the information within it
             foreach (var cartItem in cart)
