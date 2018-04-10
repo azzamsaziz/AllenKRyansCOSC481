@@ -168,7 +168,8 @@ namespace AllenKRyansCOSC481.Controllers
                     UserName = model.Email,
                     Email = model.Email,
                     FirstName = model.FirstName,
-                    LastName = model.LastName
+                    LastName = model.LastName,
+                    PhoneNumber = model.PhoneNumber
                 };
 
                 var result = await UserManager.CreateAsync(user, model.Password);              

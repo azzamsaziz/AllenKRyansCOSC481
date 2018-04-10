@@ -59,8 +59,8 @@ namespace AllenKRyans.Helpers
 
             for (int i = 0; i < cartItems.Count; i++)
             {
-                body += ((i + 1) + ". " + cartItems[i].Item.Name + " - $" + cartItems[i].Price + "\n");
-                body2 += ((i + 1) + ". " + cartItems[i].Item.Name + " - $" + cartItems[i].Price + "\n");
+                body += ((i + 1) + ". " + cartItems[i].Item.Name + " (" + cartItems[i].Count + ") - $" + cartItems[i].Price + "\n");
+                body2 += ((i + 1) + ". " + cartItems[i].Item.Name + " (" + cartItems[i].Count + ") - $" + cartItems[i].Price + "\n");
             }
 
             double sum = 0;
